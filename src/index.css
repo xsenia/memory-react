@@ -1,0 +1,112 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+body {  
+  min-width: 320px;
+  margin: 0;
+  padding: 0;
+  background-color: #0b670b;
+  color: #fff;
+  font-family: Arial;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  min-height: 100%;
+}
+.wrap { 
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-basis: 100%;
+  min-width: 100%;
+  background-color: #0b670b;
+  color: #fff;
+
+}
+.deck {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-basis: 100%;
+  min-width: 100%;
+  align-items: center;
+  justify-content: center;
+
+}
+.intro {
+ text-align: center;
+}
+.intro img {
+  max-width: 100%;
+}
+.buttonStart {
+  color: #fff; 
+  text-decoration: none;
+  background-color: #ef5c18;;
+  padding: 16px 40px 18px;
+  outline: none;
+  border: 0;
+  font-size: 20px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+.buttonStart:hover,
+.buttonStart:active { 
+  background-color: #d44a0b; 
+}
+
+.hidden-block {
+  display: none;
+}
+#cardsWrap {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+}
+.card-one {
+  -webkit-flex-basis: 13.6%;
+          flex-basis: 13.6%;  
+  padding:10px;
+  position: relative;
+}
+.card-one img {
+  max-width: 100%;
+  transform: rotateY(0deg); 
+  transition: transform 0.5s;
+}
+.card-one::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 5px;
+  background: #fff;
+  background-image: linear-gradient(90deg,rgba(200,0,0,0.5) 50%, transparent 0),linear-gradient(rgba(200,0,0,0.5) 50%, transparent 0);
+  background-size: 14px 14px;
+  transform: rotateY(90deg);
+  transition: transform 0.5s 0.1s;
+}
+#cardsWrap.hidden-block {
+  display: none;
+}
+
+.turn-card img {
+  transform: rotateY(90deg);
+}
+
+.card-one.turn-card::before {
+  transform: rotateY(0deg);
+}
