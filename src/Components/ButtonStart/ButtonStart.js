@@ -3,32 +3,43 @@ import React, { Component } from 'react';
 class ButtonStart extends Component {
   constructor(props) {
       super(props);
-      this.state = {value: ''};      
+      this.state = {clicked: true};
   }
 
-  ololoText = '';
-  
-  componentWillMount(){
-    this.ololoText = '12345';
+
+  handleButt(event) {
+    event.preventDefault();
+    this.setState({ clicked: !this.state.clicked });
   }
   
-  sayOlolo(event){
-    if(event.target)
-      alert(this.ololoText);
-  }
   
   render(){
+    
+    let message;
+
+    if (this.state.clicked) {
+      message = 'кликнули';
+    } else {
+      message = 'не кликнули';
+    }
+
+    console.log(this.state.clicked);
+
     return(
-      <button
-        id="newGameButton" 
-        data-tid={this.props.tid}
-        className="buttonStart"
-        onClick={(e) => this.sayOlolo(e)}>
-        {this.props.name}
-      </button>
+      <div>
+        <button
+          id="newGameButton" 
+          data-tid={this.props.tid}
+          className="buttonStart"
+          onClick={(еvent) => this.handleButt(еvent)}>
+          {this.props.name}
+        </button>
+        <p>Сообщение: {message}</p>        
+      </div>
     );
   }
-}
+
+}//END class ButtonStart extends Component
 
 export default ButtonStart;
 
