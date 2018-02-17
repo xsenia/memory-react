@@ -1,10 +1,15 @@
 import React, { Component } from 'react'; 
 
 class ButtonStart extends Component {
+  constructor(props) {
+      super(props);
+      this.state = {value: ''};      
+  }
+
   ololoText = '';
   
   componentWillMount(){
-    this.ololoText = 'ololo';
+    this.ololoText = '12345';
   }
   
   sayOlolo(event){
