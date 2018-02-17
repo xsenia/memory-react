@@ -1,45 +1,35 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
+import Table from '../Table/Table';
 
 class ButtonStart extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {clicked: true};
+  constructor(props, state) {
+      super(props, state);
+      this.state = {gameBegun: false};
   }
 
 
-  handleButt(event) {
+  startGame(event) {
     event.preventDefault();
-    this.setState({ clicked: !this.state.clicked });
+    this.setState({ gameBegun: !this.state.gameBegun });
   }
   
   
   render(){
     
-    let message;
-
-    if (this.state.clicked) {
-      message = 'кликнули';
-    } else {
-      message = 'не кликнули';
-    }
-
-    console.log(this.state.clicked);
-
-    return(
-      <div>
+    return this.state.gameBegun 
+      ? <Table />
+      : (
         <button
           id="newGameButton" 
           data-tid={this.props.tid}
           className="buttonStart"
-          onClick={(еvent) => this.handleButt(еvent)}>
+          onClick={(еvent) => this.startGame(еvent)}>
           {this.props.name}
         </button>
-        <p>Сообщение: {message}</p>        
-      </div>
-    );
+      );
   }
 
-}//END class ButtonStart extends Component
+}
 
 export default ButtonStart;
 
