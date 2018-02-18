@@ -123,3 +123,8 @@ body {
 .start_again {
   color:  #fff;
 }
+
+.table {
+  max-width: 100%;
+  flex-basis: 980px;
+}

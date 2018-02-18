@@ -1,9 +1,15 @@
 .card {
-  width: 13%;
+  width: 16%;
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: contain;
 }
+
+/* @media (max-width: 1024px) {
+  .card {
+    width: 32%;
+  }
+}  */
 
 .backCard {
   max-width: 100%;

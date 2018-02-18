@@ -12,7 +12,7 @@ class Table extends Component {
 
     
     return(
-      <div>
+      <div className="table">
         <StartAgain />   
         <Score />   
         <p>Стол с картами к вашим услугам</p>

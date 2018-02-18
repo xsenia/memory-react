@@ -10,10 +10,7 @@ class CardsControl extends Component {
   
   
   render(){
-    /*let cardName1 = 'JH.png';
-    let cardName2 = '0D.png';
-    let cardName3 = 'AD.png';*/
-
+  
     const cardsArray = ['0C','0D','0H','0S',
                          '2C','2D','2H','2S',
                          '3C','3D','3H','3S',
@@ -44,12 +41,9 @@ class CardsControl extends Component {
     const randomArrDubleRandom = randomArrDuble.sort(compareRandom); //перемешанный удвоенный массив
 
     return(
-      <div className="cardsWrap">
-        {/*<Card cardName={cardName1}  />
-        <Card cardName={cardName2}  />
-        <Card cardName={cardName3}  />*/}
+      <div className="cardsWrap">        
 
-        {randomArrDubleRandom.map((card, i) => <Card key={i} cardName={card} />)}
+        {randomArrDubleRandom.map((card, i) => <Card key={i} cardUrl={card} />)}
         
       </div>
     );
