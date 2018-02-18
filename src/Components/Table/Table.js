@@ -1,14 +1,24 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
+
+import StartAgain from '../StartAgain/StartAgain';
+import Score from '../Score/Score';
+import CardsControl from '../CardsControl/CardsControl';
 
 class Table extends Component {
   
   
   
   render(){
+
     
     return(
-      <div>        
-        <p>Мэйбл рифмуется с тейбл</p>
+      <div>
+        <StartAgain />   
+        <Score />   
+        <p>Стол с картами к вашим услугам</p>
+        <CardsControl />       
+        
+
       </div>
     );
   }

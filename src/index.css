@@ -74,7 +74,7 @@ body {
 .hidden-block {
   display: none;
 }
-#cardsWrap {
+.cardsWrap {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -108,7 +108,7 @@ body {
   transform: rotateY(90deg);
   transition: transform 0.5s 0.1s;
 }
-#cardsWrap.hidden-block {
+.cardsWrap.hidden-block {
   display: none;
 }
 
@@ -118,4 +118,8 @@ body {
 
 .card-one.turn-card::before {
   transform: rotateY(0deg);
+}
+
+.start_again {
+  color:  #fff;
 }

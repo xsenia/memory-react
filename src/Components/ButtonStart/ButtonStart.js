@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Table from '../Table/Table';
+import logo from '../../Resources/Images/StartGame.png';
 
 class ButtonStart extends Component {
   constructor(props, state) {
@@ -19,13 +20,15 @@ class ButtonStart extends Component {
     return this.state.gameBegun 
       ? <Table />
       : (
-        <button
-          id="newGameButton" 
-          data-tid={this.props.tid}
-          className="buttonStart"
-          onClick={(еvent) => this.startGame(еvent)}>
-          {this.props.name}
-        </button>
+        <div id="intro" className="intro">
+            <img src={logo} className="App-logo" alt="Начать игру Start" />
+            <h1>Мемори</h1>            
+            <button
+              className="buttonStart"
+              onClick={(еvent) => this.startGame(еvent)}>
+              Начать игру
+            </button>
+          </div>
       );
   }
 
