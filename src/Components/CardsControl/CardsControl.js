@@ -6,10 +6,14 @@ import Card from '../Card/Card';
 class CardsControl extends Component {
 
   
-  
-  
-  
   render(){
+
+    /*---переворот карт---*/
+    function func() {
+      alert( 'Привет' );
+    }
+    setTimeout(func, 1000);
+
   
     const cardsArray = ['0C','0D','0H','0S',
                          '2C','2D','2H','2S',
@@ -47,6 +51,11 @@ class CardsControl extends Component {
         
       </div>
     );
+
+
+
+
+
   }
 
 }

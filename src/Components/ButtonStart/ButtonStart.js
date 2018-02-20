@@ -3,17 +3,29 @@ import Table from '../Table/Table';
 import logo from '../../Resources/Images/StartGame.png';
 
 class ButtonStart extends Component {
-  constructor(props, state) {
+  
+  /*первый вариант*/
+  /*constructor(props, state) {
       super(props, state);
       this.state = {gameBegun: false};
   }
 
-
   startGame(event) {
     event.preventDefault();
     this.setState({ gameBegun: !this.state.gameBegun });
-  }
-  
+  }*/
+  /*1*/
+
+  /*второй вариант*/
+  state = {
+    gameBegun: false
+  };
+
+  startGame = event => {
+    event.preventDefault();
+    this.setState({ gameBegun: !this.state.gameBegun }, () => console.log(this.state));
+  };
+  /*2*/
   
   render(){
     
