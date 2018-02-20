@@ -7,8 +7,9 @@ const Card = (props) => {
   const cardName = props.cardUrl;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
+  const id = `${props.id}`;
   return(
-    <div className={cardClassName}>
+    <div id={id} className={cardClassName}>
       <img src={backCard} className="backCard" alt="backCard" />
     </div>
   );

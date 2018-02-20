@@ -8,14 +8,17 @@ class CardsControl extends Component {
   
   render(){
 
-    /*---переворот карт---*/
+    /*-----переворот карт---*/
     function func() {
       alert( 'Привет' );
     }
     setTimeout(func, 1000);
+    /*---//переворот карт---*/
 
-  
-    const cardsArray = ['0C','0D','0H','0S',
+
+
+    /*--------------------------работа с массивом-----------------------------*/
+    const cardsArray =  ['0C','0D','0H','0S',
                          '2C','2D','2H','2S',
                          '3C','3D','3H','3S',
                          '4C','4D','4H','4S',
@@ -33,22 +36,37 @@ class CardsControl extends Component {
     function compareRandom(a, b) {
       return Math.random() - 0.5;
     }
-
     const randomCardArr = cardsArray.sort(compareRandom); //новый перемешанный массив
-
     const randomArrShot = []; //укороченный до 9 массив
     for (var i = 0; i < 9; i++) {
       randomArrShot.push(randomCardArr[i]);
     }
-
     const randomArrDuble = randomArrShot.concat(randomArrShot); //удвоенный массив
     const randomArrDubleRandom = randomArrDuble.sort(compareRandom); //перемешанный удвоенный массив
+    /*------------------------//работа с массивом-----------------------------*/
+    
+    
 
+
+    /*----------------------массив с играющими картами------------------------*/
+    let gameCards = randomArrDubleRandom.map((card, i) => {
+        const oneCard = {
+            id: i, 
+            name: card
+        };
+        return oneCard;
+    });
+    console.log(gameCards);
+    /*--------------------//массив с играющими картами------------------------*/
+    
+   
+
+    /*тут теперь массив с играющими картами*/
     return(
-      <div className="cardsWrap">        
-
-        {randomArrDubleRandom.map((card, i) => <Card key={i} cardUrl={card} />)}
-        
+      <div className="cardsWrap">
+        {gameCards.map((card, i) => 
+            <Card key={i} id={card.id} cardUrl={card.name} />
+        )}
       </div>
     );
 
