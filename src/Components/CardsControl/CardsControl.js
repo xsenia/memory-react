@@ -5,8 +5,18 @@ import Card from '../Card/Card';
 
 class CardsControl extends Component {
 
+  state = {
+    turn: false
+  };
+
+  turnCard = () => {
+    /*по клику переключаем состояние*/    
+    this.setState({ turn: !this.state.turn }/*,() => console.log(this.state)*/);
+    
+  };
   
   render(){
+
     
     /*--------------------------работа с массивом-----------------------------*/
     const cardsArray =  ['0C','0D','0H','0S',
@@ -43,37 +53,48 @@ class CardsControl extends Component {
     let gameCards = randomArrDubleRandom.map((card, i) => {
         const oneCard = {
             id: i, 
-            name: card,
-            turn: false
+            name: card
         };
         return oneCard;
     });
-    console.log(gameCards);
+    //console.log(gameCards);
     /*--------------------//массив с играющими картами------------------------*/
 
 
 
     /*-----переворот карт---*/
-    function func() {
+    /*const timeout = function () {
       const cards =  document.getElementsByClassName('card');
       if (cards.length > 0) {
         for (var i = 0; i < cards.length; i++) {
           cards[i].classList.add("turnaround");
         }
-      }      
+      }  
     }
-    setTimeout(func, 2000);
+    setTimeout(timeout, 2000);*/
     /*---//переворот карт---*/
     
+
+    //в переменную  stateTurn положила состояние
+    let stateTurn = this.state.turn;
+    this.state.turn ? stateTurn = 'true' : stateTurn = 'false'
    
 
     /*тут теперь массив с играющими картами*/
     return(
-      <div className="cardsWrap">
+      <div className="cardsWrap">        
         {gameCards.map((card, i) => 
-            <Card key={i} id={card.id} cardUrl={card.name} turn={card.turn} />
+            <Card 
+              key={i} 
+              id={card.id} 
+              cardUrl={card.name} 
+              turn={stateTurn}
+              onClick={() => this.turnCard()} 
+            />            
         )}
+        <h1>state turn - {stateTurn}</h1>
       </div>
+
     );
   }
 

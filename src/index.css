@@ -134,3 +134,10 @@ body {
 .turnaround img {
   opacity: 1;
 }
+
+div[data-turn="true"] img{
+   opacity: 1;
+}
+div[data-turn="false"] img{
+   opacity: 0;
+}
