@@ -9,7 +9,7 @@ const Card = (props) => {
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
   const id = `${props.id}`;
   return(
-    <div id={id} className={cardClassName}>
+    <div id={id} className={cardClassName}  data-turn={props.turn}>
       <img src={backCard} className="backCard" alt="backCard" />
     </div>
   );

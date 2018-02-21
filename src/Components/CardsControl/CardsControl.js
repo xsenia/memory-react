@@ -7,16 +7,7 @@ class CardsControl extends Component {
 
   
   render(){
-
-    /*-----переворот карт---*/
-    function func() {
-      alert( 'Привет' );
-    }
-    setTimeout(func, 1000);
-    /*---//переворот карт---*/
-
-
-
+    
     /*--------------------------работа с массивом-----------------------------*/
     const cardsArray =  ['0C','0D','0H','0S',
                          '2C','2D','2H','2S',
@@ -52,12 +43,27 @@ class CardsControl extends Component {
     let gameCards = randomArrDubleRandom.map((card, i) => {
         const oneCard = {
             id: i, 
-            name: card
+            name: card,
+            turn: false
         };
         return oneCard;
     });
     console.log(gameCards);
     /*--------------------//массив с играющими картами------------------------*/
+
+
+
+    /*-----переворот карт---*/
+    function func() {
+      const cards =  document.getElementsByClassName('card');
+      if (cards.length > 0) {
+        for (var i = 0; i < cards.length; i++) {
+          cards[i].classList.add("turnaround");
+        }
+      }      
+    }
+    setTimeout(func, 2000);
+    /*---//переворот карт---*/
     
    
 
@@ -65,15 +71,10 @@ class CardsControl extends Component {
     return(
       <div className="cardsWrap">
         {gameCards.map((card, i) => 
-            <Card key={i} id={card.id} cardUrl={card.name} />
+            <Card key={i} id={card.id} cardUrl={card.name} turn={card.turn} />
         )}
       </div>
     );
-
-
-
-
-
   }
 
 }
