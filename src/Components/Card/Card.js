@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Card.css';
 import backCard from '../../Resources/Images/Cards/back.png';
 
 
 const Card = (props) => {
+  //console.log('---',props);
   const cardName = props.cardUrl;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
