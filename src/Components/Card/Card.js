@@ -14,7 +14,7 @@ const Card = (props) => {
       id={id} 
       className={cardClassName}
       data-turn={props.turn}
-      onClick={props.onClick}
+      onClick={() => props.clickHandle(id)}
     >
       <img src={backCard} className="backCard" alt="backCard" />
     </div>
@@ -22,6 +22,9 @@ const Card = (props) => {
 }
 
 export default Card;
+/*цепочка же начинается с Карда, когда кликаем по диву - цепочка передачи ид стартует оттуда
+onMouseEnter
+*/
 
 
 
