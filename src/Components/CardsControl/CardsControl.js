@@ -11,6 +11,7 @@ class CardsControl extends Component {
       firstOpenedCard: null,
       gameCards: gameCards
     };
+
   }
 
   cardDeck =  ['0C','0D','0H','0S','2C','2D','2H','2S','3C','3D','3H','3S','4C','4D','4H','4S','5C','5D','5H','5S','6C','6D','6H','6S','7C','7D','7H','7S','8C','8D','8H','8S','9C','9D','9H','9S','AC','AD','AH','AS','JC','JD','JH','JS','KC','KD','KH','KS','QC','QD','QH','QS'];
@@ -34,19 +35,30 @@ class CardsControl extends Component {
     let gameCards = randomArrDubleRandom.map((card, i) => {
         const oneCard = {
             id: i, 
-            name: card
+            name: card,
+            opened: false
         };
+
         return oneCard;
     });
+    //console.log(gameCards);
     //массив с играющими картами:      
     return gameCards;
   }
 
+
+  
+
   turnCard = (cardId) => {
-    this.setState( {firstOpenedCard: cardId}, () => console.log(this.state.firstOpenedCard) );
-    let openedCardId = cardId;
-    console.log(openedCardId);
+    this.setState( {firstOpenedCard: cardId}, () => console.log(this.state.firstOpenedCard));
+    let firstOpenedCard = cardId;
+    let cloneGameCards = this.state.gameCards.slice(0);
+    cloneGameCards[cardId].opened = true;
+    this.setState( {cardsArray: cloneGameCards} );
   };
+
+  
+  
   
   render(){
 
@@ -57,7 +69,7 @@ class CardsControl extends Component {
               key={card.id} 
               id={card.id} 
               cardUrl={card.name} 
-              turn={card.isOpened}
+              turn={card.opened}
               clickHandle={(cardId) => this.turnCard(cardId)} 
             />            
         )}        

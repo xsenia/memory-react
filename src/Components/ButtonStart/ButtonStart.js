@@ -10,7 +10,7 @@ class ButtonStart extends Component {
 
   startGame = event => {
     event.preventDefault();
-    this.setState({ gameBegun: !this.state.gameBegun }, () => console.log(this.state));
+    this.setState({ gameBegun: !this.state.gameBegun }/*, () => console.log(this.state)*/);
   };
    
   render(){    
