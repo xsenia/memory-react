@@ -135,9 +135,16 @@ body {
   opacity: 1;
 }
 
-div[data-turn="true"] img{
+div[data-open="true"] img{
    opacity: 1;
 }
-div[data-turn="false"] img{
+div[data-open="false"] img{
+   opacity: 0;
+}
+
+div[data-guessed="true"] {
+  background: none;
+}
+div[data-guessed="true"] img{
    opacity: 0;
 }

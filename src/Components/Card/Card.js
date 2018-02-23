@@ -13,7 +13,8 @@ const Card = (props) => {
     <div 
       id={id} 
       className={cardClassName}
-      data-turn={props.turn}
+      data-open={props.opened}
+      data-guessed={props.guessed}
       onClick={() => props.clickHandle(id)}
     >
       <img src={backCard} className="backCard" alt="backCard" />

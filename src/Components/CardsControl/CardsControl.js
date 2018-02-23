@@ -7,10 +7,10 @@ class CardsControl extends Component {
   constructor(props) {
     super(props);
     const gameCards = this.getCardsArray(this.cardDeck);
-
-    this.state = {
-      firstOpenedCard: null,
-      gameCards: gameCards
+    this.state = {      
+      gameCards: gameCards,
+      firstOpenedCardName: null,
+      firstOpenedCardId: null
     };
 
   }
@@ -34,7 +34,8 @@ class CardsControl extends Component {
         const oneCard = {
             id: i, 
             name: card,
-            opened: false
+            opened: false,
+            guessed: false
         };
 
         return oneCard;
@@ -45,28 +46,28 @@ class CardsControl extends Component {
   }
   
 
-  turnCard = (cardId) => {    
-    
+  turnCard = (cardId) => { 
 
-    let cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры
-    cloneGameCards[cardId].opened = true;//у карты с полученным id меняем состояние открыто на true
+    let cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
+    cloneGameCards[cardId].opened = true;//в массиве у кликнутой карты  меняем состояние открыто на true
     
-    let firstCardName = this.state.firstOpenedCard;
-    firstCardName = cloneGameCards[cardId].name; //сохранили имя кликнутой карты в firstCardName, обновили состояние с null на имя первой кликнутой карты
+    let firstCardId = cloneGameCards[cardId].id; //сохранили имя кликнутой карты в firstCardName
+    let firstCardName = cloneGameCards[cardId].name; //сохранили имя кликнутой карты в firstCardName
+        
     
+    //в первом проходе пропускаем
+    if ( this.state.firstOpenedCardName !== null) {
+      if (this.state.firstOpenedCardName === cloneGameCards[cardId].name) {
+        cloneGameCards[cardId].guessed = true;
+        cloneGameCards[this.state.firstOpenedCardId].guessed = true;
+      }
+    }
 
     this.setState({
       cardsArray: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой 
-      firstOpenedCard: firstCardName//меняем состояние одной открытой карты с null на карту с пришедшим id     
-    }, () => console.log(this.state.firstOpenedCard));
-
-    
-    
-    if ( this.state.firstOpenedCard !== null) {
-      if (this.state.firstOpenedCard == cloneGameCards[cardId].name) {
-        alert('bingo!');
-      }
-    }
+      firstOpenedCardName: firstCardName,//пересохраняем имя кликнутой карты 
+      firstOpenedCardId: firstCardId//сохраняем id кликнутой карты 
+    }, () => console.log(this.state));
     
 
   };
@@ -83,8 +84,9 @@ class CardsControl extends Component {
               key={card.id} 
               id={card.id} 
               cardUrl={card.name} 
-              turn={card.opened}
-              clickHandle={(cardId) => this.turnCard(cardId)} 
+              opened={card.opened}
+              clickHandle={(cardId) => this.turnCard(cardId)}
+              guessed={card.guessed} 
             />            
         )}        
       </div>
