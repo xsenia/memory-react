@@ -7,6 +7,7 @@ class CardsControl extends Component {
   constructor(props) {
     super(props);
     const gameCards = this.getCardsArray(this.cardDeck);
+
     this.state = {
       firstOpenedCard: null,
       gameCards: gameCards
@@ -24,10 +25,7 @@ class CardsControl extends Component {
     //новый перемешанный массив:
     const randomCardArr = cardsArray.sort(compareRandom); 
     //укороченный до 9 массив:
-    const randomArrShot = []; 
-    for (var i = 0; i < 9; i++) {
-      randomArrShot.push(randomCardArr[i]);
-    }
+    const randomArrShot = randomCardArr.slice(0,9);    
     //удвоенный массив:
     const randomArrDuble = randomArrShot.concat(randomArrShot); 
     //перемешанный удвоенный массив:
@@ -45,16 +43,32 @@ class CardsControl extends Component {
     //массив с играющими картами:      
     return gameCards;
   }
-
-
   
 
-  turnCard = (cardId) => {
-    this.setState( {firstOpenedCard: cardId}, () => console.log(this.state.firstOpenedCard));
-    let firstOpenedCard = cardId;
-    let cloneGameCards = this.state.gameCards.slice(0);
-    cloneGameCards[cardId].opened = true;
-    this.setState( {cardsArray: cloneGameCards} );
+  turnCard = (cardId) => {    
+    
+
+    let cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры
+    cloneGameCards[cardId].opened = true;//у карты с полученным id меняем состояние открыто на true
+    
+    let firstCardName = this.state.firstOpenedCard;
+    firstCardName = cloneGameCards[cardId].name; //сохранили имя кликнутой карты в firstCardName, обновили состояние с null на имя первой кликнутой карты
+    
+
+    this.setState({
+      cardsArray: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой 
+      firstOpenedCard: firstCardName//меняем состояние одной открытой карты с null на карту с пришедшим id     
+    }, () => console.log(this.state.firstOpenedCard));
+
+    
+    
+    if ( this.state.firstOpenedCard !== null) {
+      if (this.state.firstOpenedCard == cloneGameCards[cardId].name) {
+        alert('bingo!');
+      }
+    }
+    
+
   };
 
   
