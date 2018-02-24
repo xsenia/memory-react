@@ -2,3 +2,4 @@ const cardDeck =  ['0C','0D','0H','0S','2C','2D','2H','2S','3C','3D','3H','3S','
 
 
 
+export default cardDeck;
