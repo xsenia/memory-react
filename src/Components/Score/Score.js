@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
 
-class Score extends Component {
-  
-  
-  
-  render(){
-
+const Score = (props) => {
+  //console.log('---',props);
     
     return(
       <div>       
-        <p>Очков: 111</p>
+        Ваши очки: {props.score}
       </div>
     );
-  }
-
 }
+
+
 
 export default Score;
 
