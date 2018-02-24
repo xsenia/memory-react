@@ -5,7 +5,8 @@ import backCard from '../../Resources/Images/Cards/back.png';
 
 const Card = (props) => {
   //console.log('---',props);
-  const cardName = props.cardUrl;
+  /*const {id, name, opened, guessed} = props;*/
+  const cardName = props.cardName;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
   const id = `${props.id}`;
