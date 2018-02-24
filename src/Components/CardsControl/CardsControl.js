@@ -11,8 +11,6 @@ class CardsControl extends Component {
     const gameCards = getCardsArray(cardDeck);
     this.state = {      
       gameCards: gameCards,
-      //firstOpenedCardName: null,
-      //firstOpenedCardId: null,
       firstOpenedCard: null
     };
   }
@@ -35,45 +33,47 @@ class CardsControl extends Component {
       const gameCardsClosed = gameCardsClose();
       //console.log(gameCardsClosed);
       this.setState({gameCards: gameCardsClosed});
-    }, 600); 
+    }, 5000); 
   }
 
 
   turnCard = (cardId) => { 
 
-    let cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
-    cloneGameCards[cardId].opened = true;//в массиве у кликнутой карты  меняем состояние открыто на true
-    
-    //let firstCardId = cloneGameCards[cardId].id; //сохранили имя кликнутой карты в firstCardName
-    //let firstCardName = cloneGameCards[cardId].name; //сохранили имя кликнутой карты в firstCardName
-    let firstCard = cloneGameCards[cardId];
-    
-    //в первом проходе пропускаем
+    const cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
+    cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
+    const openCard = cloneGameCards[cardId]; //сохраняем открытую карту в стейт
+    this.setState({
+      gameCards: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой      
+      firstOpenedCard: openCard //сохраняем первую открытую карту
+    }/*, () => console.log(this.state)*/);
 
+    /*console.log('state:');
+    console.log(this.state.firstOpenedCard);
+    console.log('openCard:');
+    console.log(openCard);*/
+    
     const firstOpenedCard = this.state.firstOpenedCard;
     if ( firstOpenedCard !== null) {
+
       if (firstOpenedCard.name === cloneGameCards[cardId].name) {
+
         cloneGameCards[cardId].guessed = true;
         cloneGameCards[firstOpenedCard.id].guessed = true;
-        //console.log(cloneGameCards[cardId]);
+        this.setState({firstOpenedCard: null});
+
       } else {
-        cloneGameCards[cardId].opened = false;
-        //console.log(cloneGameCards[cardId]);
+        setTimeout(() => {
+          cloneGameCards[cardId].opened = false;
+          cloneGameCards[firstOpenedCard.id].opened = false;
+          this.setState({firstOpenedCard: null});
+        }, 1000);      
       }
+
     }
 
-    this.setState({
-      gameCards: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой 
-      //firstOpenedCardName: firstCardName,//пересохраняем имя кликнутой карты 
-      //firstOpenedCardId: firstCardId,//сохраняем id кликнутой карты
-      firstOpenedCard: firstCard //сохраняем первую открытую карту
-    }, () => console.log(this.state));
-    
 
   };
 
-  
-  
   
   render(){
 
@@ -97,4 +97,5 @@ class CardsControl extends Component {
 }
 
 export default CardsControl;
+
 
