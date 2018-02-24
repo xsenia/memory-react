@@ -56,11 +56,11 @@ class CardsControl extends Component {
     if ( firstOpenedCard !== null) {
 
       if (firstOpenedCard.name === cloneGameCards[cardId].name) {
-
-        cloneGameCards[cardId].guessed = true;
-        cloneGameCards[firstOpenedCard.id].guessed = true;
-        this.setState({firstOpenedCard: null});
-
+        setTimeout(() => {
+          cloneGameCards[cardId].guessed = true;
+          cloneGameCards[firstOpenedCard.id].guessed = true;
+          this.setState({firstOpenedCard: null});
+        }, 1000); 
       } else {
         setTimeout(() => {
           cloneGameCards[cardId].opened = false;
