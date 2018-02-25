@@ -12,7 +12,7 @@ class CardsControl extends Component {
     const gameCards = getCardsArray(cardDeck);    
     this.state = {      
       gameCards: gameCards,
-      firstOpenedCard: null,
+      stateCard: null,
       score: 0,
       guessedPair: 0
     };
@@ -58,90 +58,67 @@ class CardsControl extends Component {
   turnCard = (cardId) => { 
 
     const cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
-    cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
-    const openCard = cloneGameCards[cardId]; //сохраняем открытую карту в стейт
-    this.setState({
-      gameCards: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой      
-      firstOpenedCard: openCard //сохраняем первую открытую карту
-    });
+
+    //если кликнутая карта не угадана
+    if (cloneGameCards[cardId].guessed !== true) {
+      
     
-    const firstOpenedCard = this.state.firstOpenedCard;
+      cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
+      const openCard = cloneGameCards[cardId]; //сохраняем открытую карту в стейт
+      this.setState({
+        gameCards: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой      
+        stateCard: openCard //сохраняем первую открытую карту
+      });
+      
+      const stateCard = this.state.stateCard;
 
-    /*var a = 2 + 2;
-    switch (a) {
-      case 3:
-        alert( 'Маловато' );
-        break;
-      case 4:
-        alert( 'В точку!' );
-        break;
-      case 5:
-        alert( 'Перебор' );
-        break;
-      default:
-        alert( 'Я таких значений не знаю' );
-    }*/
 
-    if ( firstOpenedCard !== null && firstOpenedCard.guessed !== true) {
+      /*если в стейте уже есть карта, т.е. если кликнули по второй карте*/
+      if ( stateCard !== null && stateCard.guessed === false/* && openCard.guessed === false*/) { 
 
-      if (
-        firstOpenedCard.name === cloneGameCards[cardId].name && 
-        firstOpenedCard.id !== cloneGameCards[cardId].id
-      ) {
-        setTimeout(() => {
+        if (
+          stateCard.name === openCard.name && 
+          stateCard.id !== openCard.id
+        ) {
+          setTimeout(() => {
 
-          cloneGameCards[cardId].guessed = true;
-          cloneGameCards[firstOpenedCard.id].guessed = true;
+            openCard.guessed = true;
+            cloneGameCards[stateCard.id].guessed = true;
 
-          const score = this.scoreWin()[0];
-          const guessedPair = this.scoreWin()[1];
-          this.setState(
-            {
-              firstOpenedCard: null,
-              score: score,
-              guessedPair: guessedPair
-            },
-            () => console.log(
-              this.state.guessedPair, 
-              this.state.score,
-              firstOpenedCard,
-              cloneGameCards[cardId]
-            )
-          );
-          if (this.state.guessedPair === this.state.gameCards.length/2) {
-            alert('Вы выиграли!');
-          }
-          
-        }, 1000);
-      } else if (
-        firstOpenedCard.name !== cloneGameCards[cardId].name && 
-        firstOpenedCard.id !== cloneGameCards[cardId].id
-      ) {
-        setTimeout(() => {
+            const score = this.scoreWin()[0];
+            const guessedPair = this.scoreWin()[1];
+            this.setState({
+                stateCard: null,
+                score: score,
+                guessedPair: guessedPair
+            });
+            if (this.state.guessedPair === this.state.gameCards.length/2) {
+              alert('Вы выиграли!');
+            }
+            
+          }, 1000);
+        } else if (
+          stateCard.name !== openCard.name && 
+          stateCard.id !== openCard.id
+        ) {
+          setTimeout(() => {
 
-          cloneGameCards[cardId].opened = false;
-          cloneGameCards[firstOpenedCard.id].opened = false;
-          
-          const score = this.scoreLost()[0];
-          const guessedPair = this.scoreLost()[1];
-          this.setState(
-            {
-              firstOpenedCard: null,
-              score: score,
-              guessedPair: guessedPair
-            },
-            () => console.log(
-              this.state.guessedPair, 
-              this.state.score,
-              firstOpenedCard.name,
-              cloneGameCards[cardId].name)
-          );
-        }, 1000);      
+            openCard.opened = false;
+            cloneGameCards[stateCard.id].opened = false;
+            
+            const score = this.scoreLost()[0];
+            const guessedPair = this.scoreLost()[1];
+            this.setState({
+                stateCard: null,
+                score: score,
+                guessedPair: guessedPair
+            });
+          }, 1000);      
+        }
+
       }
 
     }
-
-
   };
 
   
