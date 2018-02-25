@@ -13,7 +13,8 @@ class CardsControl extends Component {
     this.state = {      
       gameCards: gameCards,
       firstOpenedCard: null,
-      score: 0
+      score: 0,
+      guessedPair: 0
     };
   }
 
@@ -33,26 +34,28 @@ class CardsControl extends Component {
       };
       const gameCardsClosed = gameCardsClose();
       this.setState({gameCards: gameCardsClosed});
-    }, 5000); 
+    }, 1000); 
   }
 
   scoreWin = () => {
     const score = this.state.score;
-    const noguessedPair = this.state.gameCards.length / 2;    
-    const guessedPair = this.state.gameCards.length / 2 - noguessedPair;
-    const scoreWin = score + (guessedPair + 1)*42;
-    return scoreWin;
+    let guessedPair = this.state.guessedPair;
+    const noGuessedPair = this.state.gameCards.length/2 - guessedPair;
+    const scoreWin = score + (noGuessedPair)*42;
+    guessedPair = guessedPair + 1;    
+    const resultWin = [scoreWin, guessedPair];
+    return resultWin;
   }
 
   scoreLost = () => {
-    const score = this.state.score;    
-    const scoreLost = score - 42;
-    return scoreLost;
+    const score = this.state.score;
+    let guessedPair = this.state.guessedPair;
+    const scoreLost = score - guessedPair*42;
+    const resultLost = [scoreLost, guessedPair];
+    return resultLost;
   }
 
   turnCard = (cardId) => { 
-
-
 
     const cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
     cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
@@ -63,28 +66,76 @@ class CardsControl extends Component {
     });
     
     const firstOpenedCard = this.state.firstOpenedCard;
-    if ( firstOpenedCard !== null) {
 
-      if (firstOpenedCard.name === cloneGameCards[cardId].name) {
+    /*var a = 2 + 2;
+    switch (a) {
+      case 3:
+        alert( 'Маловато' );
+        break;
+      case 4:
+        alert( 'В точку!' );
+        break;
+      case 5:
+        alert( 'Перебор' );
+        break;
+      default:
+        alert( 'Я таких значений не знаю' );
+    }*/
+
+    if ( firstOpenedCard !== null && firstOpenedCard.guessed !== true) {
+
+      if (
+        firstOpenedCard.name === cloneGameCards[cardId].name && 
+        firstOpenedCard.id !== cloneGameCards[cardId].id
+      ) {
         setTimeout(() => {
+
           cloneGameCards[cardId].guessed = true;
           cloneGameCards[firstOpenedCard.id].guessed = true;
-          const score = this.scoreWin();
-          this.setState({
-            firstOpenedCard: null,
-            score: score
-          });
+
+          const score = this.scoreWin()[0];
+          const guessedPair = this.scoreWin()[1];
+          this.setState(
+            {
+              firstOpenedCard: null,
+              score: score,
+              guessedPair: guessedPair
+            },
+            () => console.log(
+              this.state.guessedPair, 
+              this.state.score,
+              firstOpenedCard,
+              cloneGameCards[cardId]
+            )
+          );
+          if (this.state.guessedPair === this.state.gameCards.length/2) {
+            alert('Вы выиграли!');
+          }
           
         }, 1000);
-      } else {
+      } else if (
+        firstOpenedCard.name !== cloneGameCards[cardId].name && 
+        firstOpenedCard.id !== cloneGameCards[cardId].id
+      ) {
         setTimeout(() => {
+
           cloneGameCards[cardId].opened = false;
           cloneGameCards[firstOpenedCard.id].opened = false;
-          const score = this.scoreLost();
-          this.setState({
-            firstOpenedCard: null,
-            score: score
-          });
+          
+          const score = this.scoreLost()[0];
+          const guessedPair = this.scoreLost()[1];
+          this.setState(
+            {
+              firstOpenedCard: null,
+              score: score,
+              guessedPair: guessedPair
+            },
+            () => console.log(
+              this.state.guessedPair, 
+              this.state.score,
+              firstOpenedCard.name,
+              cloneGameCards[cardId].name)
+          );
         }, 1000);      
       }
 
