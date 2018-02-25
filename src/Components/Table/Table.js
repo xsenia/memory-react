@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import StartAgain from '../StartAgain/StartAgain';
-import Score from '../Score/Score';
 import CardsControl from '../CardsControl/CardsControl';
 
 class Table extends Component {
@@ -13,8 +12,7 @@ class Table extends Component {
     
     return(
       <div className="table">
-        <StartAgain />   
-        <Score />   
+        <StartAgain /> 
         <p>Стол с картами к вашим услугам</p>
         <CardsControl />       
         
