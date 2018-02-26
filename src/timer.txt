@@ -1,0 +1,17 @@
+class Timer {
+  constructor(finishCallback, timeout){
+    this.finishCallback = finishCallback;
+    this.timeout = timeout || 5;
+  }
+  
+  finishCallback;
+  timeout;
+  
+  start(){
+    ...
+  }
+  
+  clear(){
+    ...
+  }
+}

@@ -1,19 +1,59 @@
 import React, { Component } from 'react'; 
-import ButtonStart from '../ButtonStart/ButtonStart';
-
+/*import ButtonStart from '../ButtonStart/ButtonStart';*/
+import CardsControl from '../CardsControl/CardsControl';
+import logo from '../../Resources/Images/StartGame.png';
 
 class App extends Component { 
+
+  constructor(props,state) {
+    super(props);    
+    this.state = {
+      gameBegun: false
+    };
+    //console.log(this.props.winScore);
+  }
+
+  startGame = event => {
+    event.preventDefault();
+    this.setState({ gameBegun: !this.state.gameBegun }/*, () => console.log(this.state)*/);
+  };
+
+
   render() { 
-    return (
-      (        
-        <div id="wrap" className="wrap" data-tid="App">    
-          <div id="deck" className="deck" data-tid="Deck">
-            <ButtonStart />            
-          </div>
-        </div>
-      )
-    );
+
+    const winScore= this.props.winScore;
+    const winScoreStr = winScore ? `Ваши очки ${winScore}` : null;
+
+    return this.state.gameBegun 
+      ? 
+            <CardsControl />
+          
+      : (
+        
+            <div id="intro" className="intro">
+                <img src={logo} className="App-logo" alt="Начать игру Start" />
+                <h1>Мемори</h1>
+                
+                <p>{winScoreStr}</p>            
+                
+                <button
+                  className="buttonStart"
+                  onClick={(еvent) => this.startGame(еvent)}>
+                  {this.props.btnText}
+                </button>
+
+              </div>
+            
+      );
+
+
+
   }
 }
+
+App.defaultProps = {
+  btnText: 'Старт',
+  winScore: null
+};
 
 export default App;
