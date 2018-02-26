@@ -4,7 +4,7 @@ import backCard from '../../Resources/Images/Cards/back.png';
 
 
 const Card = (props) => {
-  //console.log('---',props);
+  console.log('---',props);
   /*const {id, name, opened, guessed} = props;*/
   const cardName = props.cardName;
   const prefix = 'card';

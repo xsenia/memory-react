@@ -6,7 +6,8 @@ const getCardsArray = (cardsArray) => {
     //новый перемешанный массив:
     const randomCardArr = cardsArray.sort(compareRandom); 
     //укороченный до 9 массив:
-    const randomArrShot = randomCardArr.slice(0,9);    
+    //const randomArrShot = randomCardArr.slice(0,9);    
+    const randomArrShot = randomCardArr.slice(0,2);    
     //удвоенный массив:
     const randomArrDuble = randomArrShot.concat(randomArrShot); 
     //перемешанный удвоенный массив:

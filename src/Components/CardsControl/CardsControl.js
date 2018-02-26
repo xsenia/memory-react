@@ -4,6 +4,7 @@ import Card from '../Card/Card';
 import cardDeck from '../cardDeck';
 import getCardsArray from '../getCardsArray';
 import Score from '../Score/Score';
+import ButtonStart from '../ButtonStart/ButtonStart';
 
 class CardsControl extends Component {
 
@@ -14,7 +15,8 @@ class CardsControl extends Component {
       gameCards: gameCards,
       stateCard: null,
       score: 0,
-      guessedPair: 0
+      guessedPair: 0,
+      gameWin: false
     };
   }
 
@@ -93,7 +95,9 @@ class CardsControl extends Component {
                 guessedPair: guessedPair
             });
             if (this.state.guessedPair === this.state.gameCards.length/2) {
-              alert('Вы выиграли!');
+              this.setState({
+                gameWin: true
+              });
             }
             
           }, 1000);
@@ -124,11 +128,21 @@ class CardsControl extends Component {
   
   render(){
 
-    return(
+    return this.state.gameWin ? 
+
+      <ButtonStart 
+          winScore = {this.state.score}
+          btnText = 'Начать заново'
+      />
+
+    : 
+
+    (
       <div>
         <Score 
           score = {this.state.score}
         /> 
+         
         <div className="cardsWrap">
                   
           {this.state.gameCards.map((card, i) => 

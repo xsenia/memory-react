@@ -4,9 +4,13 @@ import logo from '../../Resources/Images/StartGame.png';
 
 class ButtonStart extends Component {
 
-  state = {
-    gameBegun: false
-  };
+  constructor(props,state) {
+    super(props);    
+    this.state = {
+      gameBegun: false
+    };
+    console.log(this.props.winScore);
+  }
 
   startGame = event => {
     event.preventDefault();
@@ -14,22 +18,32 @@ class ButtonStart extends Component {
   };
    
   render(){    
+    
     return this.state.gameBegun 
       ? <Table />
       : (
         <div id="intro" className="intro">
             <img src={logo} className="App-logo" alt="Начать игру Start" />
-            <h1>Мемори</h1>            
+            <h1>Мемори</h1>
+            
+            <p>{'Ваши очки: ' + this.props.winScore}</p>
+            
+            
             <button
               className="buttonStart"
               onClick={(еvent) => this.startGame(еvent)}>
-              Начать игру
+              {this.props.btnText}
             </button>
           </div>
       );
   }
 
 }
+
+ButtonStart.defaultProps = {
+  btnText: 'Старт',
+  winScore: null
+};
 
 export default ButtonStart;
 

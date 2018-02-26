@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-import StartAgain from '../StartAgain/StartAgain';
 import CardsControl from '../CardsControl/CardsControl';
 
 class Table extends Component {
@@ -12,11 +10,8 @@ class Table extends Component {
     
     return(
       <div className="table">
-        <StartAgain /> 
         <p>Стол с картами к вашим услугам</p>
-        <CardsControl />       
-        
-
+        <CardsControl />
       </div>
     );
   }
