@@ -4,9 +4,9 @@ import backCard from '../../Resources/Images/Cards/back.png';
 
 
 const Card = (props) => {
-  console.log('---',props);
-  /*const {id, name, opened, guessed} = props;*/
-  const cardName = props.cardName;
+  //console.log('---',props);
+  //const {id, name, opened, guessed, clickHandle} = props;
+  const cardName = props.name;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
   const id = `${props.id}`;
@@ -24,9 +24,6 @@ const Card = (props) => {
 }
 
 export default Card;
-/*цепочка же начинается с Карда, когда кликаем по диву - цепочка передачи ид стартует оттуда
-onMouseEnter
-*/
 
 
 

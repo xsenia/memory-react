@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Table from '../Table/Table';
+/*import Table from '../Table/Table';*/
+import CardsControl from '../CardsControl/CardsControl';
 import logo from '../../Resources/Images/StartGame.png';
 
 class ButtonStart extends Component {
@@ -9,7 +10,7 @@ class ButtonStart extends Component {
     this.state = {
       gameBegun: false
     };
-    console.log(this.props.winScore);
+    //console.log(this.props.winScore);
   }
 
   startGame = event => {
@@ -19,15 +20,17 @@ class ButtonStart extends Component {
    
   render(){    
     
+    const winScore= this.props.winScore;
+    const winScoreStr = winScore ? `Ваши очки ${winScore}` : null;
+
     return this.state.gameBegun 
-      ? <Table />
+      ? <CardsControl />
       : (
         <div id="intro" className="intro">
             <img src={logo} className="App-logo" alt="Начать игру Start" />
             <h1>Мемори</h1>
             
-            <p>{'Ваши очки: ' + this.props.winScore}</p>
-            
+            <p>{winScoreStr}</p>            
             
             <button
               className="buttonStart"

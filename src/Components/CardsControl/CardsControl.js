@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
-import Card from '../Card/Card';
+
 import cardDeck from '../cardDeck';
 import getCardsArray from '../getCardsArray';
+
+import Card from '../Card/Card';
 import Score from '../Score/Score';
 import ButtonStart from '../ButtonStart/ButtonStart';
+
 
 class CardsControl extends Component {
 
@@ -62,8 +64,7 @@ class CardsControl extends Component {
     const cloneGameCards = this.state.gameCards.slice(0);//создаем клон массива карт игры, после первого раза берем измененный массив из стейта
 
     //если кликнутая карта не угадана
-    if (cloneGameCards[cardId].guessed !== true) {
-      
+    if (cloneGameCards[cardId].guessed !== true) {      
     
       cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
       const openCard = cloneGameCards[cardId]; //сохраняем открытую карту в стейт
@@ -94,10 +95,14 @@ class CardsControl extends Component {
                 score: score,
                 guessedPair: guessedPair
             });
+
+            /*победа*/
             if (this.state.guessedPair === this.state.gameCards.length/2) {
-              this.setState({
-                gameWin: true
-              });
+              setTimeout(() => {
+                this.setState({
+                  gameWin: true
+                });
+              }, 1000);
             }
             
           }, 1000);
@@ -116,7 +121,7 @@ class CardsControl extends Component {
                 stateCard: null,
                 score: score,
                 guessedPair: guessedPair
-            });
+            }, () => console.log(this.state.score));
           }, 1000);      
         }
 
@@ -143,13 +148,12 @@ class CardsControl extends Component {
           score = {this.state.score}
         /> 
          
-        <div className="cardsWrap">
-                  
+        <div className="cardsWrap">                  
           {this.state.gameCards.map((card, i) => 
               <Card 
                 key={card.id} 
                 id={card.id} 
-                cardName={card.name} 
+                name={card.name} 
                 opened={card.opened}
                 clickHandle={(cardId) => this.turnCard(cardId)}
                 guessed={card.guessed} 
