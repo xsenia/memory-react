@@ -1,32 +1,47 @@
 import React, { Component } from 'react'; 
 /*import ButtonStart from '../ButtonStart/ButtonStart';*/
 import CardsControl from '../CardsControl/CardsControl';
+import Button from '../Button/Button';
 import logo from '../../Resources/Images/StartGame.png';
+import Engine from '../engine';
 
 class App extends Component { 
 
   constructor(props,state) {
     super(props);    
     this.state = {
-      gameBegun: false
+      gameBegun: false,
+      gameWin: false 
     };
-    //console.log(this.props.winScore);
+    
+    let arg001 = this.state.gameWin;
+    this.engine = new Engine(arg001);
   }
+
+  
+  
 
   startGame = event => {
     event.preventDefault();
     this.setState({ gameBegun: !this.state.gameBegun }/*, () => console.log(this.state)*/);
   };
 
+  render() {
 
-  render() { 
+    this.engine.getHello(); 
+   
+    
+    
+
 
     const winScore= this.props.winScore;
     const winScoreStr = winScore ? `Ваши очки ${winScore}` : null;
 
     return this.state.gameBegun 
       ? 
-            <CardsControl />
+            <CardsControl
+              engine={this.engine}
+            />
           
       : (
         
@@ -36,11 +51,12 @@ class App extends Component {
                 
                 <p>{winScoreStr}</p>            
                 
-                <button
-                  className="buttonStart"
-                  onClick={(еvent) => this.startGame(еvent)}>
-                  {this.props.btnText}
-                </button>
+                <Button
+                  btnText = 'Старт'
+                  onClick={(еvent) => this.startGame(еvent)}
+                />
+                
+                
 
               </div>
             
@@ -53,7 +69,7 @@ class App extends Component {
 
 App.defaultProps = {
   btnText: 'Старт',
-  winScore: null
+  winScore: 0 //null
 };
 
 export default App;

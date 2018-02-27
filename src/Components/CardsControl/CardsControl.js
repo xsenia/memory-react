@@ -5,7 +5,10 @@ import getCardsArray from '../getCardsArray';
 
 import Card from '../Card/Card';
 import Score from '../Score/Score';
-import ButtonStart from '../ButtonStart/ButtonStart';
+import Button from '../Button/Button';
+
+import logo from '../../Resources/Images/StartGame.png';
+
 
 
 class CardsControl extends Component {
@@ -131,14 +134,30 @@ class CardsControl extends Component {
   };
 
   
+  
   render(){
+    const winScore= this.props.winScore;
+    const winScoreStr = winScore ? `Ваши очки ${winScore}` : null;
 
-    return this.state.gameWin ? 
 
-      <ButtonStart 
-          winScore = {this.state.score}
-          btnText = 'Начать заново'
-      />
+    
+    //вызываем метод из инжина
+    this.props.engine.getHello();
+
+
+    return this.state.gameWin ?
+
+      <div id="intro" className="intro">
+        <img src={logo} className="App-logo" alt="Начать игру Start" />
+        <h1>Мемори</h1>
+        
+        <p>{winScoreStr}</p> 
+        <Button 
+            winScore = {this.state.score}
+            btnText = 'Начать заново'
+            onClick={(еvent) => this.startGame(еvent)}
+        />
+      </div>
 
     : 
 
@@ -166,6 +185,8 @@ class CardsControl extends Component {
   }
 
 }
+
+
 
 export default CardsControl;
 
