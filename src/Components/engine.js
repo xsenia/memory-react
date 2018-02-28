@@ -1,40 +1,39 @@
 class Engine {
 
-  constructor(arg1, cardsAmount) {
-    this.arg1 = arg1;
-    this.cardsAmount = cardsAmount;
+  constructor(gameFinished, settings) {
+    this.amount = settings.amount;
+    this.timeOut = settings.timeOut;
+    this.gameFinished = gameFinished;
     this.guessedCardsAmount = 0;
     this.score = 0;
   }
 
-  //arg1; зачем?
 
-  //tmp
-  getHello = () => {
-    //console.log(this.arg1);
-  }
-
-  updateGuessedCardsAmount(){
+  getGuessedCardsAmount(){
     //дергаешь, когда угадали очередную пару
     this.guessedCardsAmount += 1;
   }
 
   //вызываешь с true, когда НЕ угадали, и без аргументов, когда угадали
-  updateScore(decrement?: boolean){
-    //здесь надо проверять, отгадали ли все карты, или еще не все
-    
-    if(decrement){
+  updateScore(noGuessed){ 
+    if(noGuessed){
       this.score -= this.guessedCardsAmount * 42;
     }
     else{
-      this.updateGuessedCardsAmount();
-      this.score += (this.cardsAmount - this.guessedCardsAmount) * 42;
+      this.getGuessedCardsAmount();
+      this.score += (this.amount - this.guessedCardsAmount) * 42;
+      
+    }
+
+    if (this.amount === this.guessedCardsAmount) {
+      this.gameFinished();
+      this.score = 0;
+      this.guessedCardsAmount = 0;
     }
 
   }
 
-  getScore() {
-    console.log(this.score);
+  getScore() {    
     return this.score;
   }
 
@@ -42,13 +41,9 @@ class Engine {
     return this.guessedCardsAmount;
   }
 
-  getTest(){
-    console.log('test');
-  }
-
- 
-  
-  
+  /*getGameState(){
+     return this.gameState;
+  }*/
 
 }
 

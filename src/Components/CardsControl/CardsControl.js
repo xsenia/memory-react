@@ -1,29 +1,28 @@
 import React, { Component } from 'react';
-
-/*import cardDeck from '../cardDeck';
-import getCardsArray from '../getCardsArray';*/
-
 import Card from '../Card/Card';
 import Score from '../Score/Score';
-import Button from '../Button/Button';
+/*import Button from '../Button/Button';
+import logo from '../../Resources/Images/StartGame.png';*/
 
-import logo from '../../Resources/Images/StartGame.png';
 
+import cardDeck from '../cardDeck';
+import getCardsArray from '../getCardsArray';
 
 
 class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);
-    //const gameCards = getCardsArray(cardDeck);
-    console.log('props',props);
-    //let engine = this.props.engine; 
+   /* console.log('props',props);*/
+   /*let gameState = this.state.gameState;*/
+    this.gameCards = getCardsArray(cardDeck);
+    const gameCards = this.gameCards;//колода карт
     this.state = {      
-      gameCards: this.props.gameCards,
-      stateCard: null,
+      gameCards: gameCards, //карты в игре пришли из апп
+      stateCard: null, //просто первая карта в стейте 
       score: this.props.score,
       guessedPair: 0,
-      gameWin: false
+      gameWin: false //??
     };
   }
 
@@ -33,9 +32,7 @@ class CardsControl extends Component {
     
   timerTurnCard = () => {
 
-    setTimeout(() => {   
-       let test = this.props.engine.getTest();
-            console.log(test);   
+    setTimeout(() => {        
       const gameCardsClose = () => {
         const cloneGameCards = this.state.gameCards.slice(0);
         const gameCardsClosed = cloneGameCards.map((card, i) => {          
@@ -49,23 +46,6 @@ class CardsControl extends Component {
     }, 1000); 
   }
 
-  /*scoreWin = () => {
-    const score = this.state.score;
-    let guessedPair = this.state.guessedPair;
-    const noGuessedPair = this.state.gameCards.length/2 - guessedPair;
-    const scoreWin = score + (noGuessedPair)*42;
-    guessedPair = guessedPair + 1;    
-    const resultWin = [scoreWin, guessedPair];
-    return resultWin;
-  }
-
-  scoreLost = () => {
-    const score = this.state.score;
-    let guessedPair = this.state.guessedPair;
-    const scoreLost = score - guessedPair*42;
-    const resultLost = [scoreLost, guessedPair];
-    return resultLost;
-  }*/
 
   turnCard = (cardId) => { 
 
@@ -83,7 +63,6 @@ class CardsControl extends Component {
       
       const stateCard = this.state.stateCard;
 
-
       /*если в стейте уже есть карта, т.е. если кликнули по второй карте*/
       if ( stateCard !== null && stateCard.guessed === false/* && openCard.guessed === false*/) { 
 
@@ -93,45 +72,43 @@ class CardsControl extends Component {
 
             openCard.guessed = true;
             cloneGameCards[stateCard.id].guessed = true;
+            //запускаем из движка увеличение отгаданных пар
+            this.props.engine.updateScore();
+            //получаем из движка кол-во угаданных пар чтобы отправить в стейт
+            const guessedPair = this.props.engine.getGuessed();
 
-            /*const score = this.scoreWin()[0];
-            const guessedPair = this.scoreWin()[1];*/
-
-            //const guessedPair = this.engine.getGuessed();
-           
+            const score = this.props.engine.getScore();
+            console.log('score: ',score);
             
-            this.setState({
-                stateCard: null,
-                //score: score,
-                //guessedPair: guessedPair
-            });
-
-            /*победа*/
-            if (this.state.guessedPair === this.state.gameCards.length/2) {
-              setTimeout(() => {
-                this.setState({
-                  gameWin: true
-                });
-              }, 1000);
-            }
-            
-          }, 1000);
-        } else if (stateCard.name !== openCard.name && 
-          stateCard.id !== openCard.id) {
-
-          setTimeout(() => {
-
-            openCard.opened = false;
-            cloneGameCards[stateCard.id].opened = false;
-            
-            const score = this.scoreLost()[0];
-            const guessedPair = this.scoreLost()[1];
             this.setState({
                 stateCard: null,
                 score: score,
                 guessedPair: guessedPair
-            }, () => console.log(this.state.score));
-          }, 1000);      
+            }/*, () => console.log('CCstate',this.state)*/);
+
+          }, 1000);
+        } else if (stateCard.name !== openCard.name && 
+          stateCard.id !== openCard.id) {
+          let func = () => {
+
+            openCard.opened = false;
+            cloneGameCards[stateCard.id].opened = false;
+            
+            //запускаем из движка увеличение отгаданных пар
+            this.props.engine.updateScore(true);
+            //получаем из движка кол-во угаданных пар чтобы отправить в стейт
+            const guessedPair = this.props.engine.getGuessed();
+
+            const score = this.props.engine.getScore();
+
+
+            this.setState({
+                stateCard: null,
+                score: score,
+                guessedPair: guessedPair
+            }/*, () => console.log('CCCstate',this.state)*/);
+          }
+          setTimeout(func, 1000);      
         }
 
       }
@@ -142,33 +119,9 @@ class CardsControl extends Component {
   
   
   render(){
-    const winScore= this.props.winScore;
-    const winScoreStr = winScore ? `Ваши очки ${winScore}` : null;
 
+    return (<div>
 
-    
-    //вызываем метод из инжина
-    this.props.engine.getHello();
-
-
-    return this.state.gameWin ?
-
-      <div id="intro" className="intro">
-        <img src={logo} className="App-logo" alt="Начать игру Start" />
-        <h1>Мемори</h1>
-        
-        <p>{winScoreStr}</p> 
-        <Button 
-            winScore = {this.state.score}
-            btnText = 'Начать заново'
-            onClick={(еvent) => this.startGame(еvent)}
-        />
-      </div>
-
-    : 
-
-    (
-      <div>
         <Score 
           score = {this.state.score}
         /> 
@@ -185,9 +138,8 @@ class CardsControl extends Component {
               />
           )}
         </div>
-      </div>
+      </div>)
 
-    );
   }
 
 }
