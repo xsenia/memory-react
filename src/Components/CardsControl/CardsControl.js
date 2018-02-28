@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import cardDeck from '../cardDeck';
-import getCardsArray from '../getCardsArray';
+/*import cardDeck from '../cardDeck';
+import getCardsArray from '../getCardsArray';*/
 
 import Card from '../Card/Card';
 import Score from '../Score/Score';
@@ -15,11 +15,13 @@ class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);
-    const gameCards = getCardsArray(cardDeck);    
+    //const gameCards = getCardsArray(cardDeck);
+    console.log('props',props);
+    //let engine = this.props.engine; 
     this.state = {      
-      gameCards: gameCards,
+      gameCards: this.props.gameCards,
       stateCard: null,
-      score: 0,
+      score: this.props.score,
       guessedPair: 0,
       gameWin: false
     };
@@ -30,7 +32,10 @@ class CardsControl extends Component {
   }
     
   timerTurnCard = () => {
-    setTimeout(() => {      
+
+    setTimeout(() => {   
+       let test = this.props.engine.getTest();
+            console.log(test);   
       const gameCardsClose = () => {
         const cloneGameCards = this.state.gameCards.slice(0);
         const gameCardsClosed = cloneGameCards.map((card, i) => {          
@@ -44,7 +49,7 @@ class CardsControl extends Component {
     }, 1000); 
   }
 
-  scoreWin = () => {
+  /*scoreWin = () => {
     const score = this.state.score;
     let guessedPair = this.state.guessedPair;
     const noGuessedPair = this.state.gameCards.length/2 - guessedPair;
@@ -60,7 +65,7 @@ class CardsControl extends Component {
     const scoreLost = score - guessedPair*42;
     const resultLost = [scoreLost, guessedPair];
     return resultLost;
-  }
+  }*/
 
   turnCard = (cardId) => { 
 
@@ -70,7 +75,7 @@ class CardsControl extends Component {
     if (cloneGameCards[cardId].guessed !== true) {      
     
       cloneGameCards[cardId].opened = true;//в массиве у открытой карты  меняем состояние открыто на true 
-      const openCard = cloneGameCards[cardId]; //сохраняем открытую карту в стейт
+      const openCard = cloneGameCards[cardId]; //сохраняем открытую карту
       this.setState({
         gameCards: cloneGameCards,//заменяем рандомный массив полученным массивом из тех же карт, но с одной открытой картой      
         stateCard: openCard //сохраняем первую открытую карту
@@ -82,21 +87,23 @@ class CardsControl extends Component {
       /*если в стейте уже есть карта, т.е. если кликнули по второй карте*/
       if ( stateCard !== null && stateCard.guessed === false/* && openCard.guessed === false*/) { 
 
-        if (
-          stateCard.name === openCard.name && 
-          stateCard.id !== openCard.id
-        ) {
+        if (stateCard.name === openCard.name && stateCard.id !== openCard.id) {
+
           setTimeout(() => {
 
             openCard.guessed = true;
             cloneGameCards[stateCard.id].guessed = true;
 
-            const score = this.scoreWin()[0];
-            const guessedPair = this.scoreWin()[1];
+            /*const score = this.scoreWin()[0];
+            const guessedPair = this.scoreWin()[1];*/
+
+            //const guessedPair = this.engine.getGuessed();
+           
+            
             this.setState({
                 stateCard: null,
-                score: score,
-                guessedPair: guessedPair
+                //score: score,
+                //guessedPair: guessedPair
             });
 
             /*победа*/
@@ -109,10 +116,9 @@ class CardsControl extends Component {
             }
             
           }, 1000);
-        } else if (
-          stateCard.name !== openCard.name && 
-          stateCard.id !== openCard.id
-        ) {
+        } else if (stateCard.name !== openCard.name && 
+          stateCard.id !== openCard.id) {
+
           setTimeout(() => {
 
             openCard.opened = false;

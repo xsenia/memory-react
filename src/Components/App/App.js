@@ -5,6 +5,9 @@ import Button from '../Button/Button';
 import logo from '../../Resources/Images/StartGame.png';
 import Engine from '../engine';
 
+import cardDeck from '../cardDeck';
+import getCardsArray from '../getCardsArray';
+
 class App extends Component { 
 
   constructor(props,state) {
@@ -13,9 +16,12 @@ class App extends Component {
       gameBegun: false,
       gameWin: false 
     };
-    
-    let arg001 = this.state.gameWin;
-    this.engine = new Engine(arg001);
+    this.gameCards = getCardsArray(cardDeck);
+
+    const gameCards = this.gameCards;
+    let cardsAmount = gameCards.length;
+    let arg001 = "Hello"; //tmp
+    this.engine = new Engine(arg001, cardsAmount);
   }
 
   
@@ -28,8 +34,11 @@ class App extends Component {
 
   render() {
 
-    this.engine.getHello(); 
-   
+    //получить из инжина очки
+    let score = this.engine.getScore(); 
+    const gameCards = this.gameCards;
+
+    let guessedPair = this.engine.getGuessed(); 
     
     
 
@@ -41,24 +50,27 @@ class App extends Component {
       ? 
             <CardsControl
               engine={this.engine}
+              score={score}
+              gameCards={gameCards}
+              guessedPair = {guessedPair}
             />
           
       : (
         
             <div id="intro" className="intro">
-                <img src={logo} className="App-logo" alt="Начать игру Start" />
-                <h1>Мемори</h1>
-                
-                <p>{winScoreStr}</p>            
-                
-                <Button
-                  btnText = 'Старт'
-                  onClick={(еvent) => this.startGame(еvent)}
-                />
-                
-                
+              <img src={logo} className="App-logo" alt="Начать игру Start" />
+              <h1>Мемори</h1>
+              
+              <p>{winScoreStr}</p>            
+              
+              <Button
+                btnText = 'Старт'
+                onClick={(еvent) => this.startGame(еvent)}
+              />
+              
+              
 
-              </div>
+            </div>
             
       );
 

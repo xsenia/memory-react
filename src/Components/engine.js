@@ -1,37 +1,52 @@
 class Engine {
 
-  constructor(arg1) {
+  constructor(arg1, cardsAmount) {
     this.arg1 = arg1;
-    this._inner = false;
-    this.guessedPair = 0;
+    this.cardsAmount = cardsAmount;
+    this.guessedCardsAmount = 0;
+    this.score = 0;
   }
 
+  //arg1; зачем?
+
+  //tmp
   getHello = () => {
-    console.log(this.arg1);
-    console.log(this.getInner());
+    //console.log(this.arg1);
   }
 
-  getInner() {
-    return "Привет";
+  updateGuessedCardsAmount(){
+    //дергаешь, когда угадали очередную пару
+    this.guessedCardsAmount += 1;
   }
 
-  /*scoreWin = () => {
-    const score = this.score;
-    let guessedPair = this.guessedPair;
-    const noGuessedPair = this.gameCards.length/2 - guessedPair;
-    const scoreWin = score + (noGuessedPair)*42;
-    guessedPair = guessedPair + 1;    
-    const resultWin = [scoreWin, guessedPair];
-    return resultWin;
+  //вызываешь с true, когда НЕ угадали, и без аргументов, когда угадали
+  updateScore(decrement?: boolean){
+    //здесь надо проверять, отгадали ли все карты, или еще не все
+    
+    if(decrement){
+      this.score -= this.guessedCardsAmount * 42;
+    }
+    else{
+      this.updateGuessedCardsAmount();
+      this.score += (this.cardsAmount - this.guessedCardsAmount) * 42;
+    }
+
   }
 
-  scoreLost = () => {
-    const score = this.score;
-    let guessedPair = this.guessedPair;
-    const scoreLost = score - guessedPair*42;
-    const resultLost = [scoreLost, guessedPair];
-    return resultLost;
-  }*/
+  getScore() {
+    console.log(this.score);
+    return this.score;
+  }
+
+  getGuessed(){
+    return this.guessedCardsAmount;
+  }
+
+  getTest(){
+    console.log('test');
+  }
+
+ 
   
   
 
