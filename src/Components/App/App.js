@@ -5,6 +5,12 @@ import Button from '../Button/Button';
 import logo from '../../Resources/Images/StartGame.png';
 import Engine from '../engine';
 
+/*const GameState = {
+  finished: 'finished',
+  start: 'start',
+  game: 'game'
+}*/
+
 class App extends Component { 
 
   constructor(props,state) {
@@ -14,12 +20,14 @@ class App extends Component {
     };
     
     
-    let cardsAmount = 4/2;
+    let cardsAmount = 9; //to do 9
 
-    const gameFinished = () => {this.setState({gameState: 'finished'})};
+    const gameFinished = () => this.setState({gameState: 'finished'});
 
     const settings = {amount: cardsAmount, timeOut: 5};
     this.engine = new Engine(gameFinished, settings);
+
+    
   }
 
 
@@ -32,18 +40,12 @@ class App extends Component {
 
   render() {  
     //получить из движка очки и передать в кардс контрол
-    let score = this.engine.getScore(); 
-    const gameCards = this.gameCards;
-
-    let guessedPair = this.engine.getGuessed();
+    let score = this.engine.getScore();     
 
     if (this.state.gameState === 'game') {
         return <CardsControl
-        engine={this.engine}
-        score={score}
-        gameCards={gameCards}
-        guessedPair = {guessedPair}
-      /> 
+          engine={this.engine}
+        /> 
     } else if (this.state.gameState === 'finished') {
         return (<div id="intro" className="intro">
           <img src={logo} className="App-logo" alt="Начать игру Start" />

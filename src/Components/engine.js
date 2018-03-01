@@ -9,7 +9,7 @@ class Engine {
   }
 
 
-  getGuessedCardsAmount(){
+  _updateGuessedCardsAmount(){
     //дергаешь, когда угадали очередную пару
     this.guessedCardsAmount += 1;
   }
@@ -20,15 +20,14 @@ class Engine {
       this.score -= this.guessedCardsAmount * 42;
     }
     else{
-      this.getGuessedCardsAmount();
+      this._updateGuessedCardsAmount();
       this.score += (this.amount - this.guessedCardsAmount) * 42;
       
-    }
-
-    if (this.amount === this.guessedCardsAmount) {
-      this.gameFinished();
-      this.score = 0;
-      this.guessedCardsAmount = 0;
+      if (this.amount === this.guessedCardsAmount) {
+        this.gameFinished();
+        /*this.score = 0;
+        this.guessedCardsAmount = 0;*/
+      }
     }
 
   }

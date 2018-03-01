@@ -144,6 +144,7 @@ div[data-open="false"] img{
 
 div[data-guessed="true"] {
   background: none;
+  pointer-events: none;
 }
 div[data-guessed="true"] img{
    opacity: 0;

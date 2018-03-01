@@ -1,18 +1,23 @@
+import cardDeck from './cardDeck';
+
 const getCardsArray = (cardsArray) => {
+  if(!cardsArray || !cardsArray.length) {
+    return null;
+  } else {
     //функция перемешивания массива:
-    function compareRandom(a, b) {
-      return Math.random() - 0.5;
+    function randomizeArray(arr){
+      return arr.sort(() => Math.random() - 0.5); 
     }
     //новый перемешанный массив:
-    const randomCardArr = cardsArray.sort(compareRandom); 
+    const randomCardArr = randomizeArray(cardsArray);
     //укороченный до 9 массив:
     //const randomArrShot = randomCardArr.slice(0,9);    
-    const randomArrShot = randomCardArr.slice(0,2);    
+    const randomArrShot = randomCardArr.slice(0,9);    
     //удвоенный массив:
-    const randomArrDuble = randomArrShot.concat(randomArrShot); 
+    const randomArrDuble = randomArrShot.concat(randomArrShot);
     //перемешанный удвоенный массив:
-    const randomArrDubleRandom = randomArrDuble.sort(compareRandom);
-    let gameCards = randomArrDubleRandom.map((card, i) => {
+    const randomArrDubleRandom = randomizeArray(randomArrDuble);
+    const gameCards = randomArrDubleRandom.map((card, i) => {
       const oneCard = {
           id: i, 
           name: card,
@@ -20,12 +25,14 @@ const getCardsArray = (cardsArray) => {
           guessed: false
       };
       return oneCard;
-    });
-    //console.log(gameCards);
+    });    
     //массив с играющими картами:      
     return gameCards;
   } //return gameCards;
 
+}
+
+const cardsArr = getCardsArray(cardDeck);
 
 
-export default getCardsArray;
+export default cardsArr;
