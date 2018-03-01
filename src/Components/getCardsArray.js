@@ -1,4 +1,4 @@
-import cardDeck from './cardDeck';
+/*import cardDeck from './cardDeck';*/
 
 const getCardsArray = (cardsArray) => {
   if(!cardsArray || !cardsArray.length) {
@@ -32,7 +32,7 @@ const getCardsArray = (cardsArray) => {
 
 }
 
-const cardsArr = getCardsArray(cardDeck);
+/*const cardsArr = getCardsArray(cardDeck);*/
 
 
-export default cardsArr;
+export default getCardsArray;

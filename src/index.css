@@ -134,9 +134,12 @@ body {
 .turnaround img {
   opacity: 1;
 }
-
+div[data-open="true"] {
+  pointer-events: none;  
+}
 div[data-open="true"] img{
    opacity: 0;
+   
 }
 div[data-open="false"] img{
    opacity: .7;

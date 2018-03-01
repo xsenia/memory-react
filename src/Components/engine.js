@@ -1,11 +1,12 @@
 class Engine {
 
   constructor(gameFinished, settings) {
-    this.amount = settings.amount;
+    this.amount = settings.amount; //9
     this.timeOut = settings.timeOut;
     this.gameFinished = gameFinished;
     this.guessedCardsAmount = 0;
     this.score = 0;
+    this.winScore = 0;
   }
 
 
@@ -25,11 +26,21 @@ class Engine {
       
       if (this.amount === this.guessedCardsAmount) {
         this.gameFinished();
-        /*this.score = 0;
-        this.guessedCardsAmount = 0;*/
+        this.winScore = this.score;
+        this.score = 0;
+        this.guessedCardsAmount = 0;
       }
     }
+  }
 
+  getAgain(){    
+    if (this.amount === this.guessedCardsAmount) {
+      return true;
+    }
+  }
+
+  getWinScore() {    
+    return this.winScore;
   }
 
   getScore() {    
@@ -40,9 +51,9 @@ class Engine {
     return this.guessedCardsAmount;
   }
 
-  /*getGameState(){
+  getGameState(){
      return this.gameState;
-  }*/
+  }
 
 }
 

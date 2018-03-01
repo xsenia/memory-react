@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
 import Score from '../Score/Score';
-import cardsArr from '../getCardsArray';
+import getCardsArray from '../getCardsArray';
+import cardDeck from '../cardDeck';
 /*import Timer from '../timer';*/
 
 class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);    
-    const gameCards = cardsArr;
+    let gameCards = getCardsArray(cardDeck);
     this.state = {      
       gameCards, //gameCards: gameCards,
       firstCard: null //просто первая карта в стейте 
@@ -59,7 +60,12 @@ class CardsControl extends Component {
         this.setState({
           firstCard: null,
           gameCards: cards
-        });         
+        });        
+        if (this.props.engine.getAgain() === true) {  
+           this.setState({
+            gameCards: getCardsArray(cardDeck)
+          });     
+        }   
     } else { //первая карта
       cards[cardId].opened = true;
       this.setState({
