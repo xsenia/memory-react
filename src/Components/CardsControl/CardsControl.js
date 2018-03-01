@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import Card from '../Card/Card';
 import Score from '../Score/Score';
 import getCardsArray from '../getCardsArray';
-import cardDeck from '../cardDeck';
+/*import cardDeck from '../cardDeck';*/
 import Timer from '../timer';
 
 class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);    
-    let gameCards = getCardsArray(cardDeck);
+    let gameCards = getCardsArray();
     this.state = {      
       gameCards, //gameCards: gameCards,
       firstCard: null //просто первая карта в стейте 
@@ -17,27 +17,15 @@ class CardsControl extends Component {
 
     /*таймер*/
     const finishCallback = this.turnOff;
-    const timeout = 1000;
+    const timeout = 10;
     this.timer = new Timer(finishCallback, timeout);
   }
 
 
   componentDidMount() {
-    this.timerTurnCard();
+    this.timer.start(this.turnOff);
   }
-    
-  timerTurnCard = () => {
-    let turnTimeout = () => {      
-      const cards = this.state.gameCards;
-      const gameCardsClosed = cards.map((card, i) => {          
-        card.opened = false;
-        return card;
-      });
-      this.setState({gameCards: gameCardsClosed});
-    }
-    setTimeout(turnTimeout, 1000);
-  }
-
+  
   turnOff = () => {
     const cards = this.state.gameCards;
     const gameCardsClosed = cards.map((card, i) => {
@@ -73,8 +61,8 @@ class CardsControl extends Component {
   compare = (cardId) => {
     const firstCard = this.state.firstCard; //Первая карта из стейта
     const secondCard = this.state.gameCards[cardId]; //Вторая карта только что кликнутая
-    console.log(firstCard);
-    console.log(secondCard);
+    /*console.log(firstCard);
+    console.log(secondCard);*/
     if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {
       firstCard.guessed = true;
       secondCard.guessed = true;      

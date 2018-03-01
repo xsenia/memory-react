@@ -21,7 +21,7 @@ class App extends Component {
     };
     
     
-    let cardsAmount = 9; 
+    let cardsAmount = 3; //9
 
     const gameFinished = () => this.setState({gameState: 'finished'});
 

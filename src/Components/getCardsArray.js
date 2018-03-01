@@ -1,7 +1,7 @@
-/*import cardDeck from './cardDeck';*/
+import cardDeck from './cardDeck';
 
-const getCardsArray = (cardsArray) => {
-  if(!cardsArray || !cardsArray.length) {
+const getCardsArray = () => {
+  if(!cardDeck || !cardDeck.length) {
     return null;
   } else {
     //функция перемешивания массива:
@@ -9,10 +9,10 @@ const getCardsArray = (cardsArray) => {
       return arr.sort(() => Math.random() - 0.5); 
     }
     //новый перемешанный массив:
-    const randomCardArr = randomizeArray(cardsArray);
+    const randomCardArr = randomizeArray(cardDeck);
     //укороченный до 9 массив:
     //const randomArrShot = randomCardArr.slice(0,9);    
-    const randomArrShot = randomCardArr.slice(0,9);    
+    const randomArrShot = randomCardArr.slice(0,3);    
     //удвоенный массив:
     const randomArrDuble = randomArrShot.concat(randomArrShot);
     //перемешанный удвоенный массив:
@@ -32,7 +32,7 @@ const getCardsArray = (cardsArray) => {
 
 }
 
-/*const cardsArr = getCardsArray(cardDeck);*/
+
 
 
 export default getCardsArray;
