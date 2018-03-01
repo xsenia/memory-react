@@ -5,6 +5,7 @@ import Button from '../Button/Button';
 import logo from '../../Resources/Images/StartGame.png';
 import Engine from '../engine';
 
+
 const GameState = {
   finished: 'finished',
   start: 'start',

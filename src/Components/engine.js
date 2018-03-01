@@ -32,12 +32,7 @@ class Engine {
       }
     }
   }
-
-  getAgain(){    
-    if (this.amount === this.guessedCardsAmount) {
-      return true;
-    }
-  }
+  
 
   getWinScore() {    
     return this.winScore;

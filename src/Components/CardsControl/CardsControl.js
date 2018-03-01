@@ -3,7 +3,7 @@ import Card from '../Card/Card';
 import Score from '../Score/Score';
 import getCardsArray from '../getCardsArray';
 import cardDeck from '../cardDeck';
-/*import Timer from '../timer';*/
+import Timer from '../timer';
 
 class CardsControl extends Component {
 
@@ -16,10 +16,11 @@ class CardsControl extends Component {
     };
 
     /*таймер*/
-    /*const finishCallback = this.turnOff;
+    const finishCallback = this.turnOff;
     const timeout = 1000;
-    this.timer = new Timer(finishCallback, timeout);*/
+    this.timer = new Timer(finishCallback, timeout);
   }
+
 
   componentDidMount() {
     this.timerTurnCard();
@@ -37,35 +38,29 @@ class CardsControl extends Component {
     setTimeout(turnTimeout, 1000);
   }
 
- /* turnOff = () => {
-    const gameCardsClose = () => {
-      const cards = this.state.gameCards.slice(0);
-      const gameCardsClosed = cards.map((card, i) => {          
-        card.opened = false;
-        return card;
-      });
-      return gameCardsClosed;
-    };
-    const gameCardsClosed = gameCardsClose();
+  turnOff = () => {
+    const cards = this.state.gameCards;
+    const gameCardsClosed = cards.map((card, i) => {
+      card.opened = false;
+      return card;
+    });
     this.setState({gameCards: gameCardsClosed});
-  }*/
+  }
    
   
 
   turnCard = (cardId) => { 
     const cards = this.state.gameCards;//кешируем массив карт игры, после первого раза берем измененный массив из стейта  
     if (this.state.firstCard) { //вторая карта
-        cards[cardId].opened = true;
-        this.compare(cardId);//вот она, функция савнения
+      cards[cardId].opened = true;
+      this.compare(cardId);//вот она, функция сравнения
+      let turnTimeout = () => { 
         this.setState({
           firstCard: null,
           gameCards: cards
-        });        
-        if (this.props.engine.getAgain() === true) {  
-           this.setState({
-            gameCards: getCardsArray(cardDeck)
-          });     
-        }   
+        }); 
+      }
+      setTimeout(turnTimeout, 100);
     } else { //первая карта
       cards[cardId].opened = true;
       this.setState({
@@ -78,6 +73,8 @@ class CardsControl extends Component {
   compare = (cardId) => {
     const firstCard = this.state.firstCard; //Первая карта из стейта
     const secondCard = this.state.gameCards[cardId]; //Вторая карта только что кликнутая
+    console.log(firstCard);
+    console.log(secondCard);
     if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {
       firstCard.guessed = true;
       secondCard.guessed = true;      
