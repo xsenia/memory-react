@@ -21,7 +21,7 @@ class CardsControl extends Component {
 
     /*таймер*/
     const finishCallback = this.turnOff;
-    let timeout = 1000;
+    let timeout = 5000;
     this.timer = new Timer(finishCallback, timeout);
   }
 
@@ -42,7 +42,7 @@ class CardsControl extends Component {
 
    
 
-  /*-----------------------переворот карты--------------------------*/
+  /*-----------------------переворот карты по кулику--------------------------*/
   turnCard = (cardId) => { 
     const cards = this.state.gameCards;//кешируем массив карт игры, а после первого раза берем измененный массив из стейта  
     if (this.state.firstCard) { //если это уже вторая карта
@@ -58,26 +58,8 @@ class CardsControl extends Component {
         gameCards: cards,
         disabled: false
       });
-    }, 500);
-      this.timer.start(this.turnOff);
-      /*const compareTimeout = () => {
-        this.compare(cardId);//сравниваем карты этой функцией
-        this.setState({ // после сравнения обнуляем первую карту в стейте
-          firstCard: null,
-          gameCards: cards,
-          disabled: false
-        })
-      };
-      this.timer.start(compareTimeout);*/
-      /*setTimeout(() => {
-        this.compare(cardId);//сравниваем карты этой функцией
-        this.setState({ // после сравнения обнуляем первую карту в стейте
-          firstCard: null,
-          gameCards: cards,
-          disabled: false
-        }); 
-      }, 1000);*/
-      
+      }, 500);
+      //this.timer.start(this.turnOff);
     } else { //если это первая карта, делаем ее отрытой, сетим ее в стейт, сетим новый массив карт 
       cards[cardId].opened = true;
       this.setState({
@@ -86,7 +68,7 @@ class CardsControl extends Component {
       }); 
     }
   }
-  /*-----------------------//переворот карты--------------------------*/
+  /*-----------------------//переворот карты по клику--------------------------*/
 
 
   /*-----------------------сравнение карт--------------------------*/
