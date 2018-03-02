@@ -16,9 +16,10 @@ const Card = (props) => {
       className={cardClassName}
       data-open={props.opened}
       data-guessed={props.guessed}
+      data-desabled={props.disabled}
       onClick={() => props.clickHandle(id)}
     >
-      <img src={backCard} className="backCard" alt="backCard" />
+      <img src={backCard} className="backCard" alt="backCard"  />
     </div>
   );
 }

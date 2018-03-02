@@ -18,17 +18,11 @@ class App extends Component {
     super(props);    
     this.state = {
       gameState: GameState.start // GameState.game, GameState.finished    
-    };
-    
-    
-    let cardsAmount = 3; //9
-
+    }; 
+    const cardsAmount = 4; //9 проверить, чтоб не больше
     const gameFinished = () => this.setState({gameState: 'finished'});
-
     const settings = {amount: cardsAmount, timeOut: 5};
     this.engine = new Engine(gameFinished, settings);
-
-    
   }
 
 

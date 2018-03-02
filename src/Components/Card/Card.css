@@ -1,22 +1,4 @@
-.card {
-  width: 16%;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-size: contain;
-  cursor: pointer;
-}
 
-/* @media (max-width: 1024px) {
-  .card {
-    width: 32%;
-  }
-}  */
-
-.backCard {
-  max-width: 100%;
-  height: auto;
-  opacity: 0;
-}
 
 .card--0C {
   background-image: url(../../Resources/Images/Cards/0C.png); 

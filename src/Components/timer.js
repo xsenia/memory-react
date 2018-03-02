@@ -4,15 +4,14 @@ class Timer {
     this.finishCallback = finishCallback;
     this.timeout = timeout || 5000;
   }
-
-  //this.finishCallback - перевернуть все открытые карты, т.е. убрать open
-
-  start() { 
-    setTimeout(this.finishCallback, this.timeout);
+  
+  start() {
+    this.clear();
+    this.timer = setTimeout(() => {this.finishCallback()}, this.timeout);
   }
 
   clear(){
-    clearTimeout(this.finishCallback);
+    clearTimeout(this.timer);
   }
 
   

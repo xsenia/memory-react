@@ -129,6 +129,25 @@ body {
   max-width: 100%;
   flex-basis: 980px;
 }
+.card {
+  width: 16%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  cursor: pointer;
+}
+
+/* @media (max-width: 1024px) {
+  .card {
+    width: 32%;
+  }
+}  */
+
+.backCard {
+  max-width: 100%;
+  height: auto;
+  opacity: 0;
+}
 
 /*поврот карты*/
 .turnaround img {
@@ -151,4 +170,11 @@ div[data-guessed="true"] {
 }
 div[data-guessed="true"] img{
    opacity: 0;
+}
+
+div[data-desabled="true"] {
+  pointer-events: none;
+}
+div[data-desabled="false"] {
+  pointer-events: auto;
 }

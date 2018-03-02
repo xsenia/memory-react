@@ -1,6 +1,6 @@
 import cardDeck from './cardDeck';
 
-const getCardsArray = () => {
+const getCardsArray = (cardsAmount) => {
   if(!cardDeck || !cardDeck.length) {
     return null;
   } else {
@@ -12,7 +12,7 @@ const getCardsArray = () => {
     const randomCardArr = randomizeArray(cardDeck);
     //укороченный до 9 массив:
     //const randomArrShot = randomCardArr.slice(0,9);    
-    const randomArrShot = randomCardArr.slice(0,3);    
+    const randomArrShot = randomCardArr.slice(0,cardsAmount);    
     //удвоенный массив:
     const randomArrDuble = randomArrShot.concat(randomArrShot);
     //перемешанный удвоенный массив:

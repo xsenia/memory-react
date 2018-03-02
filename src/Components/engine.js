@@ -11,24 +11,33 @@ class Engine {
 
 
   _updateGuessedCardsAmount(){
-    //дергаешь, когда угадали очередную пару
+    //когда угадали очередную пару
     this.guessedCardsAmount += 1;
   }
 
-  //вызываешь с true, когда НЕ угадали, и без аргументов, когда угадали
+  //с true, когда НЕ угадали, и без аргументов, когда угадали
   updateScore(noGuessed){ 
     if(noGuessed){
       this.score -= this.guessedCardsAmount * 42;
     }
     else{
-      this._updateGuessedCardsAmount();
-      this.score += (this.amount - this.guessedCardsAmount) * 42;
+     
       
+      this.score += (this.amount - this.guessedCardsAmount) * 42;
+      this._updateGuessedCardsAmount();
+
+
       if (this.amount === this.guessedCardsAmount) {
-        this.gameFinished();
-        this.winScore = this.score;
-        this.score = 0;
-        this.guessedCardsAmount = 0;
+         
+          
+          this.winScore = this.score;
+          
+
+        setTimeout(() => {
+          this.score = 0;
+          this.guessedCardsAmount = 0;
+          this.gameFinished();
+        }, 500)
       }
     }
   }
@@ -48,6 +57,10 @@ class Engine {
 
   getGameState(){
      return this.gameState;
+  }
+
+  getAmount(){
+     return this.amount;
   }
 
 }
