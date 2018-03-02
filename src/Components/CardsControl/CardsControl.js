@@ -16,19 +16,21 @@ class CardsControl extends Component {
     this.state = {      
       gameCards, //gameCards: gameCards,
       firstCard: null, //просто первая карта в стейте
-      disabled: false 
+      disabled: false,
+      memorizeTimer: this.props.settingsTimeout 
     };
 
     /*таймер*/
     const finishCallback = this.turnOff;
-    let timeout = 5000;
+    let timeout = 500;
     this.timer = new Timer(finishCallback, timeout);
   }
 
 
   /*----------------переворот карт в начале игры------------------*/
   componentDidMount() {
-    this.timer.start(this.turnOff);
+    //this.timer.start(this.turnOff);
+    this.runMemorizeTimer();
   }  
   turnOff = () => {
     const cards = this.state.gameCards;
@@ -41,6 +43,24 @@ class CardsControl extends Component {
   /*----------------//переворот карт в начале игры------------------*/
 
    
+
+  runMemorizeTimer() {
+      let counter = this.state.memorizeTimer;
+      const timer = setInterval(() => {
+          if (counter > 1) {
+              counter--;
+              this.setState({memorizeTimer: counter});
+          }
+          else {
+              clearInterval(timer);
+              this.setState({memorizeTimer: null});
+              this.timer.start(this.turnOff);
+          }
+      }, 1000)
+  }
+
+
+
 
   /*-----------------------переворот карты по кулику--------------------------*/
   turnCard = (cardId) => { 
@@ -89,6 +109,16 @@ class CardsControl extends Component {
   }
   /*-----------------------//сравнение карт--------------------------*/
 
+  renderMemorizeTimer() {
+    return (
+      <div>
+        До начала игры осталось:
+        &nbsp;
+        {this.state.memorizeTimer}
+        &nbsp; сек
+      </div>
+    );
+  }
   
 
   
@@ -98,8 +128,12 @@ class CardsControl extends Component {
 
     return (
       <div>
-        <Score score = {score} /> 
-
+        {this.state.memorizeTimer != null
+            ? this.renderMemorizeTimer()
+            : <div><Score score = {score} /></div>
+        }
+        
+        <br />
         <div className="cardsWrap">                  
           {this.state.gameCards.map((card, i) => 
               <Card 

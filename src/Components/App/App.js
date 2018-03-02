@@ -21,8 +21,9 @@ class App extends Component {
     }; 
     const cardsAmount = 9; //9 проверить, чтоб не больше
     const gameFinished = () => this.setState({gameState: 'finished'});
-    const settings = {amount: cardsAmount, timeOut: 5};
+    const settings = {amount: cardsAmount, timeOut: 9};
     this.engine = new Engine(gameFinished, settings);
+    this.settingsTimeout = settings.timeOut;
   }
 
 
@@ -35,11 +36,13 @@ class App extends Component {
 
   render() {  
     //получить из движка очки и передать в третий экран    
-    let winScore = this.engine.getWinScore();     
+    let winScore = this.engine.getWinScore(); 
+    
 
     if (this.state.gameState === GameState.game) {
         return <CardsControl
           engine={this.engine}
+          settingsTimeout={this.settingsTimeout}
         /> 
     } else if (this.state.gameState === GameState.finished) {
         return (<div id="intro" className="intro">
