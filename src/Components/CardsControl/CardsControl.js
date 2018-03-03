@@ -66,7 +66,7 @@ class CardsControl extends Component {
   turnCard = (cardId) => { 
     const cards = this.state.gameCards;//кешируем массив карт игры, а после первого раза берем измененный массив из стейта  
     if (this.state.firstCard) { //если это уже вторая карта
-      cards[cardId].opened = true; //делаем ее открытой
+      cards[cardId].opened = true; //делаем ее открытой и в ксс дисейбл
       this.setState({
         gameCards: cards,
         disabled: true
@@ -80,7 +80,7 @@ class CardsControl extends Component {
       });
       }, 500);
       //this.timer.start(this.turnOff);
-    } else { //если это первая карта, делаем ее отрытой, сетим ее в стейт, сетим новый массив карт 
+    } else { //если это первая карта, делаем ее отрытой и в ксс дисейбл, сетим ее в стейт, сетим новый массив карт 
       cards[cardId].opened = true;
       this.setState({
         firstCard: cards[cardId],

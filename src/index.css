@@ -153,6 +153,12 @@ body {
 .turnaround img {
   opacity: 1;
 }
+div[data-desabled="true"] {
+  pointer-events: none;
+}
+div[data-desabled="false"] {
+  pointer-events: auto;
+}
 div[data-open="true"] {
   pointer-events: none;  
 }
@@ -171,11 +177,4 @@ div[data-guessed="true"] {
 }
 div[data-guessed="true"] img{
    opacity: 0;
-}
-
-div[data-desabled="true"] {
-  pointer-events: none;
-}
-div[data-desabled="false"] {
-  pointer-events: auto;
 }

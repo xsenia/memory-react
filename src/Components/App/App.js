@@ -21,7 +21,7 @@ class App extends Component {
     }; 
     const cardsAmount = 9; //9 проверить, чтоб не больше
     const gameFinished = () => this.setState({gameState: 'finished'});
-    const settings = {amount: cardsAmount, timeOut: 9};
+    const settings = {amount: cardsAmount, timeOut: 2};
     this.engine = new Engine(gameFinished, settings);
     this.settingsTimeout = settings.timeOut;
   }
