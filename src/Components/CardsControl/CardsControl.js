@@ -1,37 +1,34 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
 import Score from '../Score/Score';
-import getCardsArray from '../getCardsArray';
-import Timer from '../timer';
+import getCardsArray from '../../Helpers/getCardsArray/getCardsArray';
+import Timer from '../../Helpers/timer/timer';
 
 class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);
-    //console.log(props);
 
     const amountSetting = this.props.engine.getAmount();
 
     let gameCards = getCardsArray(amountSetting);
     this.state = {      
-      gameCards, //gameCards: gameCards,
-      firstCard: null, //просто первая карта в стейте
+      gameCards,
+      firstCard: null,
       disabled: false,
       memorizeTimer: this.props.settingsTimeout 
     };
-
-    /*таймер*/
+   
     const finishCallback = this.turnOff;
     let timeout = 500;
     this.timer = new Timer(finishCallback, timeout);
   }
 
-
-  /*----------------переворот карт в начале игры------------------*/
   componentDidMount() {
-    //this.timer.start(this.turnOff);
     this.runMemorizeTimer();
-  }  
+  } 
+
+
   turnOff = () => {
     const cards = this.state.gameCards;
     const gameCardsClosed = cards.map((card, i) => {
@@ -40,8 +37,7 @@ class CardsControl extends Component {
     });
     this.setState({gameCards: gameCardsClosed});
   }
-  /*----------------//переворот карт в начале игры------------------*/
-
+  
    
 
   runMemorizeTimer() {
@@ -61,26 +57,24 @@ class CardsControl extends Component {
 
 
 
-
-  /*-----------------------переворот карты по кулику--------------------------*/
+ 
   turnCard = (cardId) => { 
-    const cards = this.state.gameCards;//кешируем массив карт игры, а после первого раза берем измененный массив из стейта  
-    if (this.state.firstCard) { //если это уже вторая карта
-      cards[cardId].opened = true; //делаем ее открытой и в ксс дисейбл
+    const cards = this.state.gameCards;
+    if (this.state.firstCard) {
+      cards[cardId].opened = true;
       this.setState({
         gameCards: cards,
         disabled: true
       });
       setTimeout(() => {
-      this.compare(cardId);//сравниваем карты этой функцией
-      this.setState({ // после сравнения обнуляем первую карту в стейте
+      this.compare(cardId);
+      this.setState({
         firstCard: null,
         gameCards: cards,
         disabled: false
       });
-      }, 500);
-      //this.timer.start(this.turnOff);
-    } else { //если это первая карта, делаем ее отрытой и в ксс дисейбл, сетим ее в стейт, сетим новый массив карт 
+      }, 500);      
+    } else { 
       cards[cardId].opened = true;
       this.setState({
         firstCard: cards[cardId],
@@ -88,26 +82,23 @@ class CardsControl extends Component {
       }); 
     }
   }
-  /*-----------------------//переворот карты по клику--------------------------*/
+    
 
 
-  /*-----------------------сравнение карт--------------------------*/
   compare = (cardId) => {
-    const firstCard = this.state.firstCard; //Первая карта из стейта
-    const secondCard = this.state.gameCards[cardId]; //Вторая карта только что кликнутая
-    /*console.log(firstCard); console.log(secondCard);*/
-    if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {      
-      firstCard.guessed = true;
+    const firstCard = this.state.firstCard;
+    const secondCard = this.state.gameCards[cardId];
+    if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {firstCard.guessed = true;
       secondCard.guessed = true;
-      this.props.engine.updateScore();//запускаем из движка увеличение очков и отгаданных пар
+      this.props.engine.updateScore();
     } else if (firstCard.id !== secondCard.id && firstCard.name !== secondCard.name) {
-      this.props.engine.updateScore(true);//запускаем из движка уменьшение очков 
+      this.props.engine.updateScore(true);
     }   
     
     firstCard.opened = false;
     secondCard.opened = false;
   }
-  /*-----------------------//сравнение карт--------------------------*/
+  
 
   renderMemorizeTimer() {
     return (
@@ -120,7 +111,6 @@ class CardsControl extends Component {
     );
   }
   
-
   
   
   render(){

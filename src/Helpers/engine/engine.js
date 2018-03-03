@@ -11,11 +11,10 @@ class Engine {
 
 
   _updateGuessedCardsAmount(){
-    //когда угадали очередную пару
     this.guessedCardsAmount += 1;
   }
 
-  //с true, когда НЕ угадали, и без аргументов, когда угадали
+ 
   updateScore(noGuessed){ 
     if(noGuessed){
       this.score -= this.guessedCardsAmount * 42;
@@ -29,10 +28,8 @@ class Engine {
 
       if (this.amount === this.guessedCardsAmount) {
          
-          
-          this.winScore = this.score;
-          
-
+        this.winScore = this.score;
+        
         setTimeout(() => {
           this.score = 0;
           this.guessedCardsAmount = 0;

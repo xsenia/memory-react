@@ -3,9 +3,7 @@ import './Card.css';
 import backCard from '../../Resources/Images/Cards/back.png';
 
 
-const Card = (props) => {
-  //console.log('---',props);
-  //const {id, name, opened, guessed, clickHandle} = props;
+const Card = (props) => {  
   const cardName = props.name;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
