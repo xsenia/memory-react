@@ -6,7 +6,7 @@ const Score = (props) => {
   
     
     return(
-      <div>       
+      <div data-tid="Menu-scores">       
         Ваши очки: {props.score}
       </div>
     );

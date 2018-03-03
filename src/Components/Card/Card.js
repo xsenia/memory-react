@@ -15,6 +15,7 @@ const Card = (props) => {
       data-desabled={props.disabled}
       data-open={props.opened}
       data-guessed={props.guessed}
+      data-tid={props.dataTid}
       onClick={() => props.clickHandle(id)}
     >
       <img src={backCard} className="backCard" alt="backCard"  />

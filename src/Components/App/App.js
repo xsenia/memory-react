@@ -20,7 +20,7 @@ class App extends Component {
       gameState: GameState.start    
     }; 
     const cardsAmount = 9;
-    const gameFinished = () => this.setState({gameState: 'finished'});
+    const gameFinished = () => this.setState({gameState: GameState.finished});    
     const settings = {amount: cardsAmount, timeOut: 5};
     this.engine = new Engine(gameFinished, settings);
     this.settingsTimeout = settings.timeOut;
@@ -36,7 +36,7 @@ class App extends Component {
 
   render() {
     let winScore = this.engine.getWinScore(); 
-    const congratulations = (winScore > 0) ? 'Поздравляем!' : 'Вы проиграли! Попробуете еще раз? '
+    const congratulations = (winScore > 0) ? 'Поздравляем!' : 'Попробуете еще раз? '
     
 
     if (this.state.gameState === GameState.game) {
@@ -50,8 +50,9 @@ class App extends Component {
           <h1>{congratulations}</h1>
           <p>Ваш итоговый счет: {winScore}</p>
           <Button
-            btnText = 'Начать заново'
+            btnText = 'Еще раз'
             onClick={(еvent) => this.startGame(еvent)}
+            dataTid="EndGame-retryGame"
           />
         </div>)
     }
@@ -60,8 +61,9 @@ class App extends Component {
         <img src={logo} className="App-logo" alt="Начать игру Start" />
         <h1>Мемори</h1>
         <Button
-          btnText = 'Старт'
+          btnText = 'Начать игру'
           onClick={(еvent) => this.startGame(еvent)}
+          dataTid="NewGame-startGame"
         />
       </div>)
     }

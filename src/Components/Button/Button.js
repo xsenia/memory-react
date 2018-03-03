@@ -8,7 +8,8 @@ const Button = (props) => {
       <div>       
         <button
           className="buttonStart"
-          onClick={props.onClick}>
+          onClick={props.onClick}
+          data-tid={props.dataTid}>
           {props.btnText}
         </button>
       </div>

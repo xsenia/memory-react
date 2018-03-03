@@ -38,6 +38,11 @@ class Engine {
       }
     }
   }
+
+  setToZero() {
+    this.score = 0;
+    this.guessedCardsAmount = 0;
+  }
   
 
   getWinScore() {    

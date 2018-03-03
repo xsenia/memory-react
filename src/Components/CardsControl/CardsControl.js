@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
 import Score from '../Score/Score';
+import Button from '../Button/Button';
 import getCardsArray from '../../Helpers/getCardsArray/getCardsArray';
 import Timer from '../../Helpers/timer/timer';
 
@@ -13,10 +14,10 @@ class CardsControl extends Component {
 
     let gameCards = getCardsArray(amountSetting);
     this.state = {      
-      gameCards,
       firstCard: null,
       disabled: false,
-      memorizeTimer: this.props.settingsTimeout 
+      memorizeTimer: this.props.settingsTimeout, 
+      gameCards
     };
    
     const finishCallback = this.turnOff;
@@ -38,13 +39,14 @@ class CardsControl extends Component {
     this.setState({gameCards: gameCardsClosed});
   }
   
-   
 
-  runMemorizeTimer() {
-      let counter = this.state.memorizeTimer;
-      const timer = setInterval(() => {
-          if (counter > 1) {
+
+  runMemorizeTimer() {      
+      let counter = this.state.memorizeTimer; 
+      const timer = setInterval(() => {                 
+          if (counter > 1) {    
               counter--;
+              console.log('counter  ',counter);
               this.setState({memorizeTimer: counter});
           }
           else {
@@ -52,9 +54,23 @@ class CardsControl extends Component {
               this.setState({memorizeTimer: null});
               this.timer.start(this.turnOff);
           }
-      }, 1000)
+      }, 1000);
   }
 
+
+  startAgain = event => {
+    event.preventDefault();
+    const amountSetting = this.props.engine.getAmount();
+    const gameCards = getCardsArray(amountSetting);   
+    this.props.engine.setToZero();
+      this.setState({ 
+        memorizeTimer: this.props.settingsTimeout,
+        gameCards: gameCards
+      }, () => console.log('start again  ',this.state.memorizeTimer));
+    setTimeout(() => {
+      this.runMemorizeTimer();
+    }, 4);
+  };
 
 
  
@@ -67,12 +83,12 @@ class CardsControl extends Component {
         disabled: true
       });
       setTimeout(() => {
-      this.compare(cardId);
-      this.setState({
-        firstCard: null,
-        gameCards: cards,
-        disabled: false
-      });
+        this.compare(cardId);
+        this.setState({
+          firstCard: null,
+          gameCards: cards,
+          disabled: false
+        });
       }, 500);      
     } else { 
       cards[cardId].opened = true;
@@ -102,7 +118,7 @@ class CardsControl extends Component {
 
   renderMemorizeTimer() {
     return (
-      <div>
+      <div className="timerWrap">
         До начала игры осталось:
         &nbsp;
         {this.state.memorizeTimer}
@@ -110,17 +126,24 @@ class CardsControl extends Component {
       </div>
     );
   }
-  
+
   
   
   render(){
     let score = this.props.engine.getScore();
 
     return (
-      <div>
+      <div className="b-cards-control">
         {this.state.memorizeTimer != null
             ? this.renderMemorizeTimer()
-            : <div><Score score = {score} /></div>
+            : <div className="gameMenu">
+                <Score score = {score} />
+                <Button
+                  btnText = 'Начать заново'
+                  onClick={(еvent) => this.startAgain(еvent)}
+                  dataTid='Menu-newGame'
+                />
+              </div>
         }
         
         <br />
@@ -134,6 +157,7 @@ class CardsControl extends Component {
                 clickHandle={(cardId) => this.turnCard(cardId)}
                 guessed={card.guessed} 
                 disabled={this.state.disabled}
+                dataTid={card.opened ? 'Card' : 'Card-flipped'}
               />
           )}
         </div>
