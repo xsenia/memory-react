@@ -41,12 +41,12 @@ class CardsControl extends Component {
   
 
 
-  runMemorizeTimer() {      
+  runMemorizeTimer() {
+      console.log('runMemorizeTimer  ',this.state.memorizeTimer)     
       let counter = this.state.memorizeTimer; 
       const timer = setInterval(() => {                 
           if (counter > 1) {    
               counter--;
-              console.log('counter  ',counter);
               this.setState({memorizeTimer: counter});
           }
           else {
@@ -57,7 +57,6 @@ class CardsControl extends Component {
       }, 1000);
   }
 
-
   startAgain = event => {
     event.preventDefault();
     const amountSetting = this.props.engine.getAmount();
@@ -67,12 +66,10 @@ class CardsControl extends Component {
         memorizeTimer: this.props.settingsTimeout,
         gameCards: gameCards
       }, () => console.log('start again  ',this.state.memorizeTimer));
-    setTimeout(() => {
+    //setTimeout(() => {
       this.runMemorizeTimer();
-    }, 4);
+    //}, 4);
   };
-
-
  
   turnCard = (cardId) => { 
     const cards = this.state.gameCards;

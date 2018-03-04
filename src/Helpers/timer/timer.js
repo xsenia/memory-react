@@ -7,7 +7,6 @@ class Timer {
   
   start() {
     this.clear();
-    console.log(this.finishCallback);
     const sec = this.timeout;
     this.timer = setTimeout(() => {this.finishCallback();}, sec);
   }
