@@ -32,32 +32,9 @@ class App extends Component {
     this.setState({ gameState: GameState.game });
   };
 
-
-
-  render() {
-    let winScore = this.engine.getWinScore(); 
-    const congratulations = (winScore > 0) ? 'Поздравляем!' : 'Попробуете еще раз? '
-    
-
-    if (this.state.gameState === GameState.game) {
-        return <CardsControl
-          engine={this.engine}
-          settingsTimeout={this.settingsTimeout}
-        /> 
-    } else if (this.state.gameState === GameState.finished) {
-        return (<div id="intro" className="intro">
-          <img src={finishLogo} className="App-logo" alt="Начать игру Start" />
-          <h1>{congratulations}</h1>
-          <p>Ваш итоговый счет: {winScore}</p>
-          <Button
-            btnText = 'Еще раз'
-            onClick={(еvent) => this.startGame(еvent)}
-            dataTid="EndGame-retryGame"
-          />
-        </div>)
-    }
-      else {
-        return (<div id="intro" className="intro">
+  renderStart() {
+    return (
+      <div id="intro" className="intro">
         <img src={logo} className="App-logo" alt="Начать игру Start" />
         <h1>Мемори</h1>
         <Button
@@ -65,12 +42,49 @@ class App extends Component {
           onClick={(еvent) => this.startGame(еvent)}
           dataTid="NewGame-startGame"
         />
-      </div>)
-    }
-
-
-
+      </div>
+    )
   }
+
+  renderFinish() {
+    let winScore = this.engine.getWinScore(); 
+    const congratulations = (winScore > 0) ? 'Поздравляем!' : 'Попробуете еще раз? ';
+    return (
+      <div id="intro" className="intro">
+        <img src={finishLogo} className="App-logo" alt="Начать игру Start" />
+        <h1>{congratulations}</h1>
+        <p>Ваш итоговый счет: {winScore}</p>
+        <Button
+          btnText = 'Еще раз'
+          onClick={(еvent) => this.startGame(еvent)}
+          dataTid="EndGame-retryGame"
+        />
+      </div>
+    )
+  }
+  
+
+  render() {
+    if (this.state.gameState === GameState.game) {
+      return (
+        <CardsControl
+          engine={this.engine}
+          settingsTimeout={this.settingsTimeout}
+        /> 
+      )
+    } else if (this.state.gameState === GameState.finished) {
+        return (
+          this.renderFinish()
+        )
+    }
+      else {
+        return (
+          this.renderStart()
+        )
+    }
+  }
+
+
 }
 
 App.defaultProps = {

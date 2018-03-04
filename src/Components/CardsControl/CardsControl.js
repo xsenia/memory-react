@@ -8,7 +8,8 @@ class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);
-
+    
+    
     const amountSetting = this.props.engine.getAmount();
 
     let gameCards = getCardsArray(amountSetting);

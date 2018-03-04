@@ -138,8 +138,8 @@ div[data-open="true"] img{
    
 }
 div[data-open="false"] img {
-  /* opacity: 0.8; */
-  opacity: 1;
+  opacity: 0.8;
+  /* opacity: 1; */
 }
 
 div[data-guessed="true"] {
