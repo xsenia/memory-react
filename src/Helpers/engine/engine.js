@@ -53,14 +53,6 @@ class Engine {
     return this.score;
   }
 
-  getGuessed(){
-    return this.guessedCardsAmount;
-  }
-
-  getGameState(){
-     return this.gameState;
-  }
-
   getAmount(){
      return this.amount;
   }

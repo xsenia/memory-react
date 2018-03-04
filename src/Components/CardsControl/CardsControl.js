@@ -65,10 +65,7 @@ class CardsControl extends Component {
       this.setState({ 
         memorizeTimer: this.props.settingsTimeout,
         gameCards: gameCards
-      }, () => console.log('start again  ',this.state.memorizeTimer));
-    //setTimeout(() => {
-      this.runMemorizeTimer();
-    //}, 4);
+      }, () => this.runMemorizeTimer());
   };
  
   turnCard = (cardId) => { 
