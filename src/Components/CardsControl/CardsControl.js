@@ -3,7 +3,6 @@ import Card from '../Card/Card';
 import Score from '../Score/Score';
 import Button from '../Button/Button';
 import getCardsArray from '../../Helpers/getCardsArray/getCardsArray';
-import Timer from '../../Helpers/timer/timer';
 
 class CardsControl extends Component {
 
@@ -19,10 +18,6 @@ class CardsControl extends Component {
       memorizeTimer: this.props.settingsTimeout, 
       gameCards
     };
-   
-    const finishCallback = this.turnOff;
-    let timeout = 500;
-    this.timer = new Timer(finishCallback, timeout);
   }
 
   componentDidMount() {
@@ -41,20 +36,21 @@ class CardsControl extends Component {
   
 
 
-  runMemorizeTimer() {
-      console.log('runMemorizeTimer  ',this.state.memorizeTimer)     
-      let counter = this.state.memorizeTimer; 
-      const timer = setInterval(() => {                 
-          if (counter > 1) {    
-              counter--;
-              this.setState({memorizeTimer: counter});
-          }
-          else {
-              clearInterval(timer);
-              this.setState({memorizeTimer: null});
-              this.timer.start(this.turnOff);
-          }
-      }, 1000);
+  runMemorizeTimer() {     
+    let counter = this.state.memorizeTimer; 
+    const timer = setInterval(() => {                 
+      if (counter > 1) {
+          counter--;
+          this.setState({memorizeTimer: counter});
+      }
+      else {
+          clearInterval(timer);
+          this.setState({memorizeTimer: null});
+          setTimeout(() => {
+            this.turnOff();
+          }, 500);
+      }
+    }, 1000);
   }
 
   startAgain = event => {
@@ -69,7 +65,7 @@ class CardsControl extends Component {
   };
  
   turnCard = (cardId) => { 
-    const cards = this.state.gameCards;
+    const cards = this.state.gameCards.slice(0);
     if (this.state.firstCard) {
       cards[cardId].opened = true;
       this.setState({
@@ -103,11 +99,31 @@ class CardsControl extends Component {
       this.props.engine.updateScore();
     } else if (firstCard.id !== secondCard.id && firstCard.name !== secondCard.name) {
       this.props.engine.updateScore(true);
-    }   
-    
+    }
     firstCard.opened = false;
     secondCard.opened = false;
   }
+
+
+
+  /*compare = (cardId) => {
+    const firstCard = this.state.firstCard;
+    const cloneFirstCard = {};
+    for (var key in firstCard) {
+      cloneFirstCard[key] = firstCard[key];
+    } 
+    console.log(cloneFirstCard);
+    const secondCard = this.state.gameCards[cardId];
+    if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {cloneFirstCard.guessed = true;
+      secondCard.guessed = true;
+      this.props.engine.updateScore();
+    } else if (firstCard.id !== secondCard.id && firstCard.name !== secondCard.name) {
+      this.props.engine.updateScore(true);
+    } 
+    //firstCard.opened = false;
+    cloneFirstCard.opened = false;
+    secondCard.opened = false;
+  }*/
   
 
   renderMemorizeTimer() {
