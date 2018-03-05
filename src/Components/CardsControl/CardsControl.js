@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Card from '../Card/Card';
-import Score from '../Score/Score';
-import Button from '../Button/Button';
+import GameMenu from '../GameMenu/GameMenu';
 import getCardsArray from '../../Helpers/getCardsArray/getCardsArray';
 
 class CardsControl extends Component {
@@ -9,7 +8,7 @@ class CardsControl extends Component {
   constructor(props,state) {
     super(props);
     
-    
+
     const amountSetting = this.props.engine.getAmount();
 
     let gameCards = getCardsArray(amountSetting);
@@ -75,11 +74,12 @@ class CardsControl extends Component {
       });
       setTimeout(() => {
         this.compare(cardId);
+        this.turnOff();
         this.setState({
           firstCard: null,
-          gameCards: cards,
+          //gameCards: cards,
           disabled: false
-        });
+        }, () => console.log(this.state));
       }, 500);      
     } else { 
       cards[cardId].opened = true;
@@ -89,42 +89,22 @@ class CardsControl extends Component {
       }); 
     }
   }
-    
 
-
-  compare = (cardId) => {
+  compare = (cardId) => {  
     const firstCard = this.state.firstCard;
-    const secondCard = this.state.gameCards[cardId];
-    if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {firstCard.guessed = true;
+    let cards = this.state.gameCards.slice(0);
+    const firstCardId = this.state.firstCard.id;
+    let secondCard = cards[cardId];
+    if (firstCard.name === secondCard.name) {
+      cards[firstCardId].guessed = true;
       secondCard.guessed = true;
       this.props.engine.updateScore();
-    } else if (firstCard.id !== secondCard.id && firstCard.name !== secondCard.name) {
+      //this.setState({gameCards: cards});
+    } else {
       this.props.engine.updateScore(true);
     }
-    firstCard.opened = false;
-    secondCard.opened = false;
   }
-
-
-
-  /*compare = (cardId) => {
-    const firstCard = this.state.firstCard;
-    const cloneFirstCard = {};
-    for (var key in firstCard) {
-      cloneFirstCard[key] = firstCard[key];
-    } 
-    console.log(cloneFirstCard);
-    const secondCard = this.state.gameCards[cardId];
-    if (firstCard.id !== secondCard.id && firstCard.name === secondCard.name) {cloneFirstCard.guessed = true;
-      secondCard.guessed = true;
-      this.props.engine.updateScore();
-    } else if (firstCard.id !== secondCard.id && firstCard.name !== secondCard.name) {
-      this.props.engine.updateScore(true);
-    } 
-    //firstCard.opened = false;
-    cloneFirstCard.opened = false;
-    secondCard.opened = false;
-  }*/
+      
   
 
   renderMemorizeTimer() {
@@ -147,17 +127,12 @@ class CardsControl extends Component {
       <div className="b-cards-control">
         {this.state.memorizeTimer != null
             ? this.renderMemorizeTimer()
-            : <div className="gameMenu">
-                <Score score = {score} />
-                <Button
-                  btnText = 'Начать заново'
-                  onClick={(еvent) => this.startAgain(еvent)}
-                  dataTid='Menu-newGame'
-                />
-              </div>
+            : <GameMenu 
+              score={score}
+              onClick={(еvent) => this.startAgain(еvent)}
+             />            
         }
         
-        <br />
         <div className="cardsWrap">                  
           {this.state.gameCards.map((card, i) => 
               <Card 

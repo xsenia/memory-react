@@ -107,7 +107,7 @@ body {
   display: flex;
   -webkit-justify-content: space-between;
   justify-content: space-between;
-  height: 30px;
+  height: 45px;
 }
 .gameMenu .buttonStart {
   font-size: 18px;
@@ -120,7 +120,7 @@ body {
 }
 
 .timerWrap {
-  height: 30px;
+  height: 45px;
 }
 
 div[data-desabled="true"] {
