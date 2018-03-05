@@ -26,7 +26,7 @@ class CardsControl extends Component {
 
 
   turnOff = () => {
-    const cards = this.state.gameCards;
+    const cards = this.state.gameCards.slice(0);
     const gameCardsClosed = cards.map((card, i) => {
       card.opened = false;
       return card;
@@ -34,7 +34,6 @@ class CardsControl extends Component {
     this.setState({gameCards: gameCardsClosed});
   }
   
-
 
   runMemorizeTimer() {     
     let counter = this.state.memorizeTimer; 
@@ -66,42 +65,55 @@ class CardsControl extends Component {
  
   turnCard = (cardId) => { 
     const cards = this.state.gameCards.slice(0);
+
     if (this.state.firstCard) {
+
       cards[cardId].opened = true;
       this.setState({
         gameCards: cards,
         disabled: true
       });
+
       setTimeout(() => {
         this.compare(cardId);
         this.turnOff();
         this.setState({
           firstCard: null,
-          //gameCards: cards,
+          gameCards: cards,
           disabled: false
-        }, () => console.log(this.state));
-      }, 500);      
-    } else { 
+        });
+      }, 500); 
+
+    } else {
+
       cards[cardId].opened = true;
       this.setState({
         firstCard: cards[cardId],
         gameCards: cards
-      }); 
+      });
+
     }
   }
 
   compare = (cardId) => {  
-    const firstCard = this.state.firstCard;
-    let cards = this.state.gameCards.slice(0);
+
+    const cards = this.state.gameCards.slice(0);
     const firstCardId = this.state.firstCard.id;
-    let secondCard = cards[cardId];
+
+    const firstCard = this.state.firstCard;
+    const secondCard = cards[cardId];
+
     if (firstCard.name === secondCard.name) {
+
       cards[firstCardId].guessed = true;
       secondCard.guessed = true;
       this.props.engine.updateScore();
-      //this.setState({gameCards: cards});
+      this.setState({gameCards: cards});
+
     } else {
+
       this.props.engine.updateScore(true);
+
     }
   }
       
