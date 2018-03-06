@@ -25,13 +25,17 @@ class CardsControl extends Component {
   } 
 
 
-  turnOff = () => {
-    const cards = this.state.gameCards.slice(0);
-    const gameCardsClosed = cards.map((card, i) => {
+  turnOff = () => {    
+    const cardsClone = JSON.parse(JSON.stringify(this.state.gameCards));
+
+    const gameCardsClosed = cardsClone.map((card, i) => {
       card.opened = false;
       return card;
     });
-    this.setState({gameCards: gameCardsClosed});
+
+    this.setState({
+      gameCards: gameCardsClosed
+    });
   }
   
 
@@ -68,7 +72,9 @@ class CardsControl extends Component {
 
     if (this.state.firstCard) {
 
-      cards[cardId].opened = true;
+      const cardsOpened = {...cards[cardId]};
+      cardsOpened.opened = true;
+      cards[cardId] = cardsOpened;
       this.setState({
         gameCards: cards,
         disabled: true
@@ -76,17 +82,16 @@ class CardsControl extends Component {
 
       setTimeout(() => {
         this.compare(cardId);
-        this.turnOff();
         this.setState({
           firstCard: null,
-          gameCards: cards,
           disabled: false
         });
       }, 500); 
 
     } else {
-
-      cards[cardId].opened = true;
+      const cardsOpened = {...cards[cardId]};
+      cardsOpened.opened = true;
+      cards[cardId] = cardsOpened;
       this.setState({
         firstCard: cards[cardId],
         gameCards: cards
@@ -95,24 +100,29 @@ class CardsControl extends Component {
     }
   }
 
-  compare = (cardId) => {  
-
+  compare = (cardId) => { 
     const cards = this.state.gameCards.slice(0);
     const firstCardId = this.state.firstCard.id;
-
     const firstCard = this.state.firstCard;
     const secondCard = cards[cardId];
 
     if (firstCard.name === secondCard.name) {
 
-      cards[firstCardId].guessed = true;
+      const firstOpenCard = {...cards[firstCardId]};
+      firstOpenCard.guessed = true;
+      cards[firstCardId] = firstOpenCard;
+
+      const secondCard = {...cards[cardId]};
       secondCard.guessed = true;
+      cards[cardId] = secondCard;
+
       this.props.engine.updateScore();
       this.setState({gameCards: cards});
 
     } else {
 
       this.props.engine.updateScore(true);
+      this.turnOff();
 
     }
   }
