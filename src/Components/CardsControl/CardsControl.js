@@ -25,17 +25,10 @@ class CardsControl extends Component {
   } 
 
 
-  turnOff = () => {    
-    const cardsClone = JSON.parse(JSON.stringify(this.state.gameCards));
-
-    const gameCardsClosed = cardsClone.map((card, i) => {
-      card.opened = false;
-      return card;
-    });
-
-    this.setState({
-      gameCards: gameCardsClosed
-    });
+  turnOff = () => {        
+    let cardsClone = JSON.parse(JSON.stringify(this.state.gameCards));
+    cardsClone.forEach(card => card.opened = false);    
+    this.setState({gameCards: cardsClone});
   }
   
 
@@ -165,7 +158,6 @@ class CardsControl extends Component {
                 clickHandle={(cardId) => this.turnCard(cardId)}
                 guessed={card.guessed} 
                 disabled={this.state.disabled}
-                dataTid={card.opened ? 'Card' : 'Card-flipped'}
               />
           )}
         </div>

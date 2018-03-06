@@ -4,7 +4,7 @@ import backCard from '../../Resources/Images/Cards/back.png';
 
 
 const Card = (props) => {
-  //const {id, name, opened, guessed, clickHandle, dataTid} = props;
+  //const {id, name, opened, guessed, clickHandle} = props;
   const cardName = props.name;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
@@ -16,7 +16,7 @@ const Card = (props) => {
       data-desabled={props.disabled}
       data-open={props.opened}
       data-guessed={props.guessed}
-      data-tid={props.dataTid}
+      data-tid={props.opened ? 'Card' : 'Card-flipped'}
       onClick={() => props.clickHandle(idCard)}
     >
       <img src={backCard} className="backCard" alt="backCard"  />
