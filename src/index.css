@@ -44,11 +44,37 @@ body {
 }
 .intro {
  text-align: center;
+ width: 100%;
 }
-.intro img {
-  max-width: 100%;
+.startGameImage {
+  max-width: 501px;
+  width: 100%;
+  background: url(../src/Resources/Images/StartGame.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+.startGameImage > div {
+  width: 100%;
+  padding-bottom: 51.3%;
 }
 
+.finishGameImage {
+  max-width: 501px;
+  width: 100%;
+  background: url(../src/Resources/Images/FinishGame.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  margin-left: auto;
+  margin-right: auto;
+}
+.finishGameImage > div {
+  width: 100%;
+  padding-bottom: 51.3%;
+}
 
 .buttonStart {
   color: #fff; 
@@ -70,7 +96,9 @@ body {
 }
 
 .b-cards-control {
- 
+ width: 100%;
+ max-width: 900px;
+ padding-left: 15px;
 }
 .cardsWrap {
   display: -webkit-flex;
@@ -91,12 +119,21 @@ body {
   background-size: contain;
   cursor: pointer;
 }
-.backCard {
-  max-width: 100%;
-  height: auto;
-  opacity: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
+
+.cardsBack {
+  width: 100%;
+  position: relative;
+  padding-bottom: 138.9%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: contain;
+  opacity: 0.8;
+}
+
+@media (max-width: 414px) {
+  .card {
+    width: 22%;
+  }
 }
 
 .gameMenu {
@@ -112,11 +149,13 @@ body {
 .gameMenu .buttonStart {
   font-size: 18px;
   padding: 5px 20px 7px;
-  background-color: #0b670b;
-  transition: background-color 0.3s;
+  background-color: transparent;
+  transition: color 0.3s;
+  position: relative;
+  top: -6px;
 }
 .gameMenu .buttonStart:hover {
-  background-color: #0a570a;
+  color: #f3783f;
 }
 
 .timerWrap {
@@ -133,11 +172,11 @@ div[data-desabled="false"] {
 div[data-open="true"] {
   pointer-events: none;  
 }
-div[data-open="true"] img{
+div[data-open="true"] .cardsBack {
    opacity: 0;
    
 }
-div[data-open="false"] img {
+div[data-open="false"] .cardsBack  {
   opacity: 0.8;
   /* opacity: 1; */
 }
@@ -146,6 +185,7 @@ div[data-guessed="true"] {
   background: none;
   pointer-events: none;
 }
-div[data-guessed="true"] img{
+div[data-guessed="true"] .cardsBack {
    opacity: 0;
 }
+

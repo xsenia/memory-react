@@ -1,10 +1,9 @@
 import React from 'react';
 import './Card.css';
-import backCard from '../../Resources/Images/Cards/back.png';
+
 
 
 const Card = (props) => {
-  //const {id, name, opened, guessed, clickHandle} = props;
   const cardName = props.name;
   const prefix = 'card';
   const cardClassName = `${prefix} ${prefix}--${cardName}`;
@@ -18,8 +17,8 @@ const Card = (props) => {
       data-guessed={props.guessed}
       data-tid={props.opened ? 'Card' : 'Card-flipped'}
       onClick={() => props.clickHandle(idCard)}
-    >
-      <img src={backCard} className="backCard" alt="backCard"  />
+    >      
+      <div className="cardsBack"></div>
     </div>
   );
 }

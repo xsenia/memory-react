@@ -1,8 +1,6 @@
 import React, { Component } from 'react'; 
 import CardsControl from '../CardsControl/CardsControl';
 import Button from '../Button/Button';
-import logo from '../../Resources/Images/StartGame.png';
-import finishLogo from '../../Resources/Images/FinishGame.png';
 import Engine from '../../Helpers/engine/engine';
 
 
@@ -35,7 +33,7 @@ class App extends Component {
   renderStart() {
     return (
       <div id="intro" className="intro">
-        <img src={logo} className="App-logo" alt="Начать игру Start" />
+        <div className="startGameImage"><div></div></div>        
         <h1>Мемори</h1>
         <Button
           btnText = 'Начать игру'
@@ -51,7 +49,7 @@ class App extends Component {
     const congratulations = (winScore > 0) ? 'Поздравляем!' : 'Попробуете еще раз? ';
     return (
       <div id="intro" className="intro">
-        <img src={finishLogo} className="App-logo" alt="Начать игру Start" />
+        <div className="finishGameImage"><div></div></div>
         <h1>{congratulations}</h1>
         <p>Ваш итоговый счет: {winScore}</p>
         <Button

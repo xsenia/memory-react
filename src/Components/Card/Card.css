@@ -1,5 +1,6 @@
-
-
+.cardsBack {
+  background-image: url(../../Resources/Images/Cards/back.png);
+}
 .card--0C {
   background-image: url(../../Resources/Images/Cards/0C.png); 
 }
