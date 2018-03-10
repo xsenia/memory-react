@@ -3,11 +3,13 @@ import React from 'react';
 
 
 const Button = (props) => {
-  
+    
+    const classButton = `buttonStart ${props.disabled ? 'desabled' : ''}`;
     return(
       <div>       
         <button
-          className="buttonStart"
+          disabled={props.disabled}
+          className={classButton}
           onClick={props.onClick}
           data-tid={props.dataTid}>
           {props.btnText}

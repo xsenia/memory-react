@@ -87,6 +87,13 @@ body {
   transition: background-color 0.3s;
   cursor: pointer;
 }
+.buttonStart.desabled {
+  background: gray;
+}
+.buttonStart.desabled:hover {
+  background: gray;
+  cursor: default;
+}
 .buttonStart:hover,
 .buttonStart:active { 
   background-color: #d44a0b; 
@@ -189,3 +196,40 @@ div[data-guessed="true"] .cardsBack {
    opacity: 0;
 }
 
+.b-settings {
+  max-width: 300px;
+  margin: 0 auto 20px;
+}
+.b-settings .row {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.b-settings .row label {
+  width: 80%;
+  position: relative;
+  font-size: 20px;
+}
+.b-settings .row input {
+  text-align: center;
+}
+.b-settings .row label .warn {
+  position: absolute;
+}
+.warning .warn {
+  display: none;
+}
+.warningError .warn {
+  display: block;
+  color: red;
+  background: #fff;
+  padding: 3px;
+  font-size: 16px;
+  top: 0;
+  right: -100%;
+}

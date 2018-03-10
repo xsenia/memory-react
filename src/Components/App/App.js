@@ -10,34 +10,92 @@ const GameState = {
   game: 'game'
 }
 
+
+
 class App extends Component { 
 
   constructor(props,state) {
     super(props);    
     this.state = {
-      gameState: GameState.start    
+      gameState: GameState.start,
+      cardsAmount: 9,
+      timeOut: 5,
+      cardsAmountNotCorrect: false
     }; 
-    const cardsAmount = 9;
-    const gameFinished = () => this.setState({gameState: GameState.finished});    
-    const settings = {amount: cardsAmount, timeOut: 1};
-    this.engine = new Engine(gameFinished, settings);
-    this.settingsTimeout = settings.timeOut;
   }
 
+  initEngine() {
+    const cardsAmount = this.state.cardsAmount;
+    const timeOut = this.state.timeOut;
+    const settings = {amount: cardsAmount, timeOut: timeOut};
+    const gameFinished = () => this.setState({gameState: GameState.finished});
+    this.engine = new Engine(gameFinished, settings);
+  }
+
+  checkAmountSetting(value) {
+    let numValue = parseInt(value,10);
+    this.setState({
+      cardsAmountNotCorrect: !!(numValue < 1) || numValue > 26,
+      cardsAmount: numValue});
+  }
+
+  checkTimesSetting(value) {            
+    let valueTime = parseInt(value,10);
+    this.setState({ 
+      cardsAmountNotCorrect: !!(valueTime < 1) || valueTime > 50,
+      timeOut: valueTime 
+    });
+  }
+  
 
   startGame = event => {
     event.preventDefault();    
     this.setState({ gameState: GameState.game });
   };
 
+
+
+
+  renderGameSettings() {
+    const inputProps = {
+        type: 'text',
+        style: {marginRight: 10, width: 60}
+      };
+    const labelStyle = this.state.cardsAmountNotCorrect ? 'warningError' : 'warning';
+    let amount = this.state.cardsAmount;
+    let timeOut = this.state.timeOut;
+
+    return (
+      <div className="b-settings">
+        <div className="row">
+          <label className={labelStyle}>Количество пар карт: <span className="warn">но не больше 26!</span> </label>
+          <input {...inputProps}
+            value={amount || ''}
+            onChange={(e) => this.checkAmountSetting(e.target.value)}
+          />
+        </div>
+        <div className="row">
+          <label className={labelStyle}>Время на запоминание: <span className="warn">не больше 50!</span> </label>
+          <input {...inputProps}
+            value={timeOut || ''}
+            onChange={(e) => this.checkTimesSetting(e.target.value)}
+          />
+        </div>
+      </div>
+    )
+  }
+
+
   renderStart() {
     return (
       <div id="intro" className="intro">
         <div className="startGameImage"><div></div></div>        
         <h1>Мемори</h1>
+        {this.renderGameSettings()}
         <Button
+          disabled={this.state.cardsAmountNotCorrect}
           btnText = 'Начать игру'
-          onClick={(еvent) => this.startGame(еvent)}
+          onClick={(еvent) => {this.startGame(еvent);this.initEngine();}}
           dataTid="NewGame-startGame"
         />
       </div>

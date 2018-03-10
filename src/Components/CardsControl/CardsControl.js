@@ -7,15 +7,15 @@ class CardsControl extends Component {
 
   constructor(props,state) {
     super(props);
-    
 
-    const amountSetting = this.props.engine.getAmount();
-
+    const amountSetting = this.props.engine.getAmount(); 
     let gameCards = getCardsArray(amountSetting);
+
+    const timeoutSetting = this.props.engine.getTimeout();
     this.state = {      
       firstCard: null,
       disabled: false,
-      memorizeTimer: this.props.settingsTimeout, 
+      memorizeTimer: timeoutSetting, 
       gameCards
     };
   }

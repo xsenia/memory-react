@@ -1,9 +1,9 @@
 class Engine {
 
   constructor(gameFinished, settings) {
-    this.amount = settings.amount; //9
-    this.timeOut = settings.timeOut;
     this.gameFinished = gameFinished;
+    this.amount = settings.amount;
+    this.timeOut = settings.timeOut;
     this.guessedCardsAmount = 0;
     this.score = 0;
     this.winScore = 0;
@@ -13,6 +13,17 @@ class Engine {
     this.guessedCardsAmount += 1;
   }
  
+  _getFinish() {
+    if (this.amount === this.guessedCardsAmount) {
+        this.winScore = this.score;        
+        setTimeout(() => {
+          this.score = 0;
+          this.guessedCardsAmount = 0;
+          this.gameFinished();
+        }, 500)
+      }
+  }
+
   updateScore(noGuessed){ 
     if(noGuessed){
       this.score -= this.guessedCardsAmount * 42;
@@ -24,16 +35,6 @@ class Engine {
     }
   }
 
-  _getFinish() {
-    if (this.amount === this.guessedCardsAmount) {         
-        this.winScore = this.score;        
-        setTimeout(() => {
-          this.score = 0;
-          this.guessedCardsAmount = 0;
-          this.gameFinished();
-        }, 500)
-      }
-  }
 
   setToZero() {
     this.score = 0;
@@ -49,8 +50,12 @@ class Engine {
     return this.score;
   }
 
-  getAmount(){
-     return this.amount;
+  getAmount(){    
+    return this.amount;
+  }
+
+  getTimeout(){    
+    return this.timeOut;
   }
 
 }
